@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
@@ -35,35 +36,7 @@ public class BCTwoPlusZeroPR extends LinearOpMode {
     private TfodProcessor tfod;
     private VisionPortal visionPortal;
     DcMotor Arm;
-    Servo angleServo1, angleServo2, rightServo, leftServo;
-    private static final double servoOpen = 0.3;
-
-    public void angleServoDown() {
-        angleServo1.setPosition(-0.99);
-        angleServo2.setPosition(1);
-    }
-
-    public void angleServoUp() {
-        angleServo1.setPosition(1.00);
-        angleServo2.setPosition(-0.99);
-    }
-    public void angleServoMiddle(){
-        angleServo1.setPosition(-0.52);
-        angleServo2.setPosition(0.52);
-    }
-    public void releaseFirstPixel() {
-        rightServo.setPosition(servoOpen);
-    }
-
-    public void releaseSecondPixel() {
-        leftServo.setPosition(servoOpen);
-    }
-
-    public void initServos() {
-        leftServo.setPosition(-1);
-        rightServo.setPosition(0.75);
-        Arm.setPower(0.23);
-    }
+    Intake intake;
 
     public void moveArmTo(int revs, double power) {
         Arm.setTargetPosition(revs);
@@ -91,11 +64,8 @@ public class BCTwoPlusZeroPR extends LinearOpMode {
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         Arm = hardwareMap.dcMotor.get("Arm_Motor");
-        angleServo1 = hardwareMap.get(Servo.class, "servo1");
-        angleServo2 = hardwareMap.get(Servo.class, "servo5");
-        rightServo = hardwareMap.get(Servo.class, "servo2");
-        leftServo = hardwareMap.get(Servo.class, "servo3");
-        initServos();
+        intake = new Intake(hardwareMap);
+        intake.initServos();
         initTfod();
 
         parkRight = new Vector2d(50.2, 9.6);
@@ -137,7 +107,7 @@ public class BCTwoPlusZeroPR extends LinearOpMode {
                 .lineToSplineHeading(yellow)
                 .addTemporalMarker(1, () -> {
                     moveArmTo(65, 0.27);
-                    angleServoMiddle();
+                    intake.angleServoMiddle();
                 })
                 .addTemporalMarker(2.2, () -> {
                     Arm.setPower(0.21);
@@ -148,7 +118,7 @@ public class BCTwoPlusZeroPR extends LinearOpMode {
                 .lineToSplineHeading(purple)
                 .addTemporalMarker(2.5, () -> {
                     moveArmTo(115, 0.32);
-                    angleServoDown();
+                    intake.angleServoDown();
                 })
                 .addTemporalMarker(4, () -> {
                     moveArmTo(95, 0.3);
@@ -161,11 +131,11 @@ public class BCTwoPlusZeroPR extends LinearOpMode {
 
         drive.followTrajectory(traj);
 
-        releaseSecondPixel();
+        intake.releaseSecondPixel();
 
         drive.followTrajectory(traj1);
 
-        releaseFirstPixel();
+        intake.releaseFirstPixel();
 
         drive.followTrajectory(traj2);
 
