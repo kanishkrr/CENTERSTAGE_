@@ -40,5 +40,10 @@ public class Intake {
         rightServo.setPosition(0.75);
     }
 
+    public void setAngleServoPos(double leftServo, double rightServo) {
+        angleServo1.setPosition(leftServo);
+        angleServo2.setPosition(rightServo);
+    }
+
 
 }
