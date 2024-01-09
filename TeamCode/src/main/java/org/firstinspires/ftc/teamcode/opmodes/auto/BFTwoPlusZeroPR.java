@@ -111,6 +111,7 @@ public class BFTwoPlusZeroPR extends LinearOpMode {
                 })
                 .waitSeconds(0.5)
                 .back(14)
+                .strafeRight(4)
                 .UNSTABLE_addTemporalMarkerOffset(0.1, () -> {
                     arm.setHeight(100, 0.34);
                     intake.angleServoDown();
