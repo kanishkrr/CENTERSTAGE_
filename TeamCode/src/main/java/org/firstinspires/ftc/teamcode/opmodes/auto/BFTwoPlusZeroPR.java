@@ -25,7 +25,7 @@ import org.firstinspires.ftc.teamcode.common.rr.util.Side;
 import java.util.List;
 
 @Autonomous
-public class BFTwoPlusZeroPL extends LinearOpMode {
+public class BFTwoPlusZeroPR extends LinearOpMode {
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
     private static final String TFOD_MODEL_ASSET = "model_20231018_181921.tflite";
     private static final String[] LABELS = {
@@ -34,7 +34,7 @@ public class BFTwoPlusZeroPL extends LinearOpMode {
     private TfodProcessor tfod;
     private VisionPortal visionPortal;
     Side side;
-    Pose2d purple, yellow, start, parkLeft;
+    Pose2d purple, yellow, start, parkRight;
     Arm arm;
     Intake intake;
     double leftDist;
@@ -49,7 +49,7 @@ public class BFTwoPlusZeroPL extends LinearOpMode {
 
         initTfod();
 
-        parkLeft = new Pose2d(47.2, 59.6, Math.toRadians(180));
+        parkRight = new Pose2d(52.2, 10, Math.toRadians(180));
         start = new Pose2d(-38, 61, Math.toRadians(-90));
 
         waitForStart();
@@ -115,7 +115,7 @@ public class BFTwoPlusZeroPL extends LinearOpMode {
                     arm.setHeight(100, 0.34);
                     intake.angleServoDown();
                 })
-                .lineToSplineHeading(parkLeft)
+                .lineToSplineHeading(parkRight)
                 .back(7)
                 .build();
 

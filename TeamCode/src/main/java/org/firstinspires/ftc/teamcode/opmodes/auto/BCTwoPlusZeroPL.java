@@ -68,15 +68,15 @@ public class BCTwoPlusZeroPL extends LinearOpMode {
 
         switch (side) {
             case LEFT:
-                yellow = new Pose2d(49, 37, Math.toRadians(0));
+                yellow = new Pose2d(46.8, 37, Math.toRadians(0));
                 purple = new Pose2d(33, 28, Math.toRadians(180));
                 break;
             case CENTER:
-                yellow = new Pose2d(49, 31, Math.toRadians(0));
+                yellow = new Pose2d(46.8, 31, Math.toRadians(0));
                 purple = new Pose2d(22.5, 21.5, Math.toRadians(180));
                 break;
             case RIGHT:
-                yellow = new Pose2d(49, 25, Math.toRadians(0));
+                yellow = new Pose2d(46.8, 25, Math.toRadians(0));
                 purple = new Pose2d(10.5, 28, Math.toRadians(180));
                 break;
         }
