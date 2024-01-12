@@ -15,8 +15,8 @@ public class Test {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
 
-        Pose2d yellow = new Pose2d(49, 33, Math.toRadians(0));
-        Pose2d purple = new Pose2d(-44.3, 26, Math.toRadians(0));
+        Pose2d yellow = new Pose2d(46.8, 37, Math.toRadians(0));
+        Pose2d purple = new Pose2d(33, 28, Math.toRadians(180));
         Pose2d parkRight = new Pose2d(52.2, 10, Math.toRadians(180));
         Pose2d parkLeft = new Pose2d(47, 59.6, Math.toRadians(180));
 
@@ -25,17 +25,9 @@ public class Test {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(30, 30, Math.toRadians(150), Math.toRadians(150), 17.2)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(-38, 61, Math.toRadians(-90)))
-                                .lineToLinearHeading(purple)
-                                .waitSeconds(9)
-                                .strafeLeft(32)
-                                .forward(66)
-                                .lineToLinearHeading(yellow)
-                                .waitSeconds(0.5)
-                                .strafeRight(18)
-                                .lineToSplineHeading(parkRight)
-                                .back(7)
-                                .build()
+                        drive.trajectorySequenceBuilder(new Pose2d(14, 61, Math.toRadians(-90)))
+                        .lineToSplineHeading(yellow)
+                        .build()
 
                 );
 
