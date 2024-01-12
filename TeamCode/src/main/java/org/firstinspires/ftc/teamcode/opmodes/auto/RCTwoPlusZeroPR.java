@@ -17,7 +17,7 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 
 import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
 
-import org.firstinspires.ftc.teamcode.common.rr.util.Side;
+import org.firstinspires.ftc.teamcode.common.commandbase.Side;
 
 import java.util.List;
 
@@ -60,7 +60,7 @@ public class RCTwoPlusZeroPR extends LinearOpMode {
             if (x1 < 1000) {
                 side = Side.LEFT;
             } else if (x1 > 1000) {
-                side = Side.CENTER;
+                side = Side.CENT;
             } else {
                 side = Side.RIGHT;
             }
@@ -71,7 +71,7 @@ public class RCTwoPlusZeroPR extends LinearOpMode {
                 yellow = new Pose2d(46.8, -31, Math.toRadians(0));
                 purple = new Pose2d(10.5, -28, Math.toRadians(180));
                 break;
-            case CENTER:
+            case CENT:
                 yellow = new Pose2d(46.8, -37, Math.toRadians(0));
                 purple = new Pose2d(22.5, -21.5, Math.toRadians(180));
                 break;

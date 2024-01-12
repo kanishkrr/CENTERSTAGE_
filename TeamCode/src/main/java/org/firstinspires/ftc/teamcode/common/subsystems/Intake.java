@@ -25,7 +25,7 @@ public class Intake {
     }
     public void angleServoMiddle(){
         angleServo1.setPosition(-0.52);
-        angleServo2.setPosition(0.52);
+        angleServo2.setPosition(0.51);
     }
     public void releaseFirstPixel() {
         rightServo.setPosition(servoOpen);

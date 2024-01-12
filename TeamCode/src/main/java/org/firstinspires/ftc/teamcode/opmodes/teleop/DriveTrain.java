@@ -173,7 +173,7 @@ public class DriveTrain extends OpMode {
 
         if(gamepad2.x) {
             angleServo1.setPosition(-0.44);
-            angleServo2.setPosition(0.45);
+            angleServo2.setPosition(0.43);
         }
 
         if (gamepad2.y && gamepad2.dpad_down && gamepad2.left_trigger == 1) {

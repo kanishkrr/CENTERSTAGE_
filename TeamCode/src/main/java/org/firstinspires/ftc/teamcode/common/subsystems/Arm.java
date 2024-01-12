@@ -13,6 +13,8 @@ public class Arm {
     public void setHeight(int target, double power) {
         arm.setTargetPosition(target);
 
+        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
         int error = arm.getTargetPosition()-arm.getCurrentPosition();
 
         arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -27,7 +29,11 @@ public class Arm {
             System.out.println(arm.getCurrentPosition());
         }
 
-        arm.setPower(0.0);
+        arm.setPower(0.23);
+    }
+
+    public void setP(double p) {
+        arm.setPower(p);
     }
 
     public int getPos() {

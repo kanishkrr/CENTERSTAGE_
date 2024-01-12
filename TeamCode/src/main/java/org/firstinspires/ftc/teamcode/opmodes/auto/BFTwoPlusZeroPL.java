@@ -1,11 +1,8 @@
 package org.firstinspires.ftc.teamcode.opmodes.auto;
 
-import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.checkerframework.checker.units.qual.A;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
@@ -16,18 +13,17 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
 
 import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
 
-import org.firstinspires.ftc.teamcode.common.rr.util.Side;
+import org.firstinspires.ftc.teamcode.common.commandbase.Side;
 
 import java.util.List;
 
 @Autonomous
 public class BFTwoPlusZeroPL extends LinearOpMode {
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
-    private static final String TFOD_MODEL_ASSET = "model_20231018_181921.tflite";
+    private static final String TFOD_MODEL_ASSET = "model_20231018_181921.tflite"; //"model_20231027_204348.tflite"
     private static final String[] LABELS = {
             "team object",
     };
@@ -61,9 +57,9 @@ public class BFTwoPlusZeroPL extends LinearOpMode {
             float x1 = currentRecognitions.get(0).getLeft();
             float y1 = currentRecognitions.get(0).getTop();
 
-            if (x1 < 1000) {
-                side = Side.CENTER;
-            } else if (x1 > 1000) {
+            if (x1 < 150) {
+                side = Side.CENT;
+            } else if (x1 > 150) {
                 side = Side.RIGHT;
             } else {
                 side = Side.LEFT;
@@ -76,7 +72,7 @@ public class BFTwoPlusZeroPL extends LinearOpMode {
                 purple = new Pose2d(-34.3, 31.7, Math.toRadians(0));
                 leftDist = 26.5;
                 break;
-            case CENTER:
+            case CENT:
                 yellow = new Pose2d(46.8, 33, Math.toRadians(0));
                 purple = new Pose2d(-44.3, 26, Math.toRadians(0));
                 leftDist = 32;
