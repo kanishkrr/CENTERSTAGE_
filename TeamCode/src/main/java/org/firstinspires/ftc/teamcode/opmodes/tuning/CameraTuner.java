@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmodes.auto;
+package org.firstinspires.ftc.teamcode.opmodes.tuning;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -9,10 +9,12 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
+import org.firstinspires.ftc.teamcode.common.commandbase.Side;
+
 import java.util.List;
 
 @Autonomous
-public class Cam extends LinearOpMode {
+public class CameraTuner extends LinearOpMode {
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
     private static final String TFOD_MODEL_ASSET = "model_20231018_181921.tflite";
     private static final String[] LABELS = {
@@ -20,6 +22,8 @@ public class Cam extends LinearOpMode {
     };
     private TfodProcessor tfod;
     private VisionPortal visionPortal;
+
+    Side side;
 
 
     @Override
@@ -37,14 +41,21 @@ public class Cam extends LinearOpMode {
             List<Recognition> currentRecognitions = tfod.getRecognitions();
             currentRecognitions = tfod.getRecognitions();
 
+            side = Side.RIGHT;
+
             if (currentRecognitions.size() != 0) {
                 float x1 = currentRecognitions.get(0).getLeft();
-                float y1 = currentRecognitions.get(0).getTop();
 
-                System.out.println(x1);
+                side = Side.CENT;
+
+                if (x1 < 200) {
+                    side = Side.LEFT;
+                }
 
 
             }
+
+            System.out.println(side);
         }
 
 

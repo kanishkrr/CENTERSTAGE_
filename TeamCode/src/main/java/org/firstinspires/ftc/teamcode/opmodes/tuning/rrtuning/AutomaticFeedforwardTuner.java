@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.common.rr.drive.opmode;
+package org.firstinspires.ftc.teamcode.opmodes.tuning.rrtuning;
 
 import static org.firstinspires.ftc.teamcode.common.rr.drive.DriveConstants.MAX_RPM;
 import static org.firstinspires.ftc.teamcode.common.rr.drive.DriveConstants.RUN_USING_ENCODER;

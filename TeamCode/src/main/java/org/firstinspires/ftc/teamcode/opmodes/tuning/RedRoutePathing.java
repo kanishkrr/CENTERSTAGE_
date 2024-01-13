@@ -1,7 +1,8 @@
-package org.firstinspires.ftc.teamcode.opmodes.auto;
+package org.firstinspires.ftc.teamcode.opmodes.tuning;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -14,78 +15,67 @@ import org.firstinspires.ftc.teamcode.common.subsystems.Intake;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
-import com.acmerobotics.roadrunner.geometry.Pose2d;
-
 import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
-
 import org.firstinspires.ftc.teamcode.common.commandbase.Side;
 
 import java.util.List;
+@Config
 @Autonomous
-public class BCTwoPlusZeroPL extends LinearOpMode {
+public class RedRoutePathing extends LinearOpMode {
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
-    private static final String TFOD_MODEL_ASSET = "model_20231018_181921.tflite";
+    private static final String TFOD_MODEL_ASSET = "model_20231027_204348.tflite";
     private static final String[] LABELS = {
             "team object",
     };
 
-    Side side;
     Pose2d purple, yellow, start;
-    Vector2d parkLeft;
+    Vector2d parkLeft, parkRight;
     private TfodProcessor tfod;
     private VisionPortal visionPortal;
     Arm arm;
     Intake intake;
-    int leftAdd;
+    public static double leftPurpleX, leftPurpleY, centerPurpleX, centerPurpleY, rightPurpleX, rightPurpleY, purpleHeading = 0.0;
+    public static double leftYellowX, leftYellowY, centerYellowX, centerYellowY, rightYellowX, rightYellowY, yellowHeading = 0.0;
+    public static double startX, startY, startHeading = 0.0;
+    public static int side = 1;
     @Override
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+
         arm = new Arm(hardwareMap);
         arm.setP(0.23);
+
         intake = new Intake(hardwareMap);
         intake.initServos();
 
         initTfod();
 
-        parkLeft = new Vector2d(50.2, 59.6);
-        start = new Pose2d(14, 61, Math.toRadians(-90));
+        parkLeft = new Vector2d(50.2, -9.6);
+        parkRight = new Vector2d(50.2, -59.6);
+        start = new Pose2d(startX, startY, Math.toRadians(startHeading));
         drive.setPoseEstimate(start);
 
         waitForStart();
+        sleep(2000);
 
         List<Recognition> currentRecognitions = tfod.getRecognitions();
         currentRecognitions = tfod.getRecognitions();
-
         telemetryTfod();
 
-        if(currentRecognitions.size() != 0){
-            float x1 = currentRecognitions.get(0).getLeft();
-
-            if (x1 < 200) {
-                side = Side.LEFT;
-            } else {
-                side = Side.CENT;
-            }
-
-        } else {
-            side = Side.RIGHT;
-        }
+        //recognition code here
 
         switch (side) {
-            case LEFT:
-                yellow = new Pose2d(43.4, 35, Math.toRadians(0));
-                purple = new Pose2d(37, 24.5, Math.toRadians(180));
-                leftAdd = 12;
+            case 1:
+                yellow = new Pose2d(leftYellowX, leftYellowY, Math.toRadians(yellowHeading));
+                purple = new Pose2d(leftPurpleX, leftPurpleY, Math.toRadians(purpleHeading));
                 break;
-            case CENT:
-                yellow = new Pose2d(43.4, 29.4, Math.toRadians(0));
-                purple = new Pose2d(26, 17.3, Math.toRadians(180));
-                leftAdd = 26;
+            case 2:
+                yellow = new Pose2d(centerYellowX, centerYellowY, Math.toRadians(yellowHeading));
+                purple = new Pose2d(centerPurpleX, centerPurpleY, Math.toRadians(purpleHeading));
                 break;
-            case RIGHT:
-                yellow = new Pose2d(43.9, 25.8, Math.toRadians(0));
-                purple = new Pose2d(12.5, 26.5, Math.toRadians(180));
-                leftAdd = 16;
+            case 3:
+                yellow = new Pose2d(rightYellowX, rightYellowY, Math.toRadians(yellowHeading));
+                purple = new Pose2d(rightPurpleX, rightPurpleY, Math.toRadians(purpleHeading));
                 break;
         }
 
@@ -96,24 +86,24 @@ public class BCTwoPlusZeroPL extends LinearOpMode {
                 .addDisplacementMarker(() -> {
                     intake.angleServoMiddle();
                 })
-                .waitSeconds(0.5)
+                .waitSeconds(0.2)
                 .lineToLinearHeading(yellow)
                 .addDisplacementMarker(() -> {
                     intake.releaseSecondPixel();
                 })
-                .waitSeconds(0.5)
+                .waitSeconds(0.2)
                 .back(4)
                 .turn(Math.toRadians(180))
                 .UNSTABLE_addTemporalMarkerOffset(0.5, () -> {
                     intake.angleServoDown();
                 })
-                .waitSeconds(1)
+                .waitSeconds(0.2)
                 .lineToLinearHeading(purple)
-                .waitSeconds(0.5)
+                .waitSeconds(0.2)
                 .UNSTABLE_addTemporalMarkerOffset(0.3, () -> {
                     intake.releaseFirstPixel();
                 })
-                .waitSeconds(0.5)
+                .waitSeconds(0.2)
                 .back(3)
                 .turn(Math.toRadians(5))
                 .addDisplacementMarker(() -> {
@@ -121,9 +111,9 @@ public class BCTwoPlusZeroPL extends LinearOpMode {
                     intake.angleServoUp();
                 })
                 .back(6)
-                .waitSeconds(0.5)
-                .strafeRight(14+leftAdd)
-                .waitSeconds(0.5)
+                .waitSeconds(0.2)
+                .strafeRight(14)
+                .waitSeconds(0.2)
                 .splineToConstantHeading(parkLeft, Math.toRadians(180))
                 .back(5.5)
                 .build();
