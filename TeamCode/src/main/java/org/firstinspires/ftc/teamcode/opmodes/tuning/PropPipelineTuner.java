@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.common.vision.PropPipeline;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.opencv.core.Scalar;
 
-@Disabled // remove this line to have this show up on your robot
+
 @Autonomous
 public class PropPipelineTuner extends OpMode {
     private VisionPortal visionPortal;
@@ -18,44 +18,23 @@ public class PropPipelineTuner extends OpMode {
 
     @Override
     public void init() {
-        // the current range set by lower and upper is the full range
-        // HSV takes the form: (HUE, SATURATION, VALUE)
-        // which means to select our colour, only need to change HUE
-        // the domains are: ([0, 180], [0, 255], [0, 255])
-        // this is tuned to detect red, so you will need to experiment to fine tune it for your robot
-        // and experiment to fine tune it for blue
-        Scalar lower = new Scalar(150, 100, 100); // the lower hsv threshold for your detection
-        Scalar upper = new Scalar(180, 255, 255); // the upper hsv threshold for your detection
-        double minArea = 100; // the minimum area for the detection to consider for your prop
+        //tuned for red, need to tune it for blue
+        Scalar lower = new Scalar(150, 100, 100); //lower threshold
+        Scalar upper = new Scalar(180, 255, 255); //upper threshold
+        double minArea = 100; //area to detect obj
 
         cam = new PropPipeline(
                 lower,
                 upper,
-                () -> minArea, // these are lambda methods, in case we want to change them while the match is running, for us to tune them or something
-                () -> 200, // the left dividing line, in this case the left third of the frame
-                () -> 600 // the left dividing line, in this case the right third of the frame
+                () -> minArea,
+                () -> 200, // left div. line
+                () -> 600 // right div. line
         );
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1")) // the camera on your robot is named "Webcam 1" by default
                 .addProcessor(cam)
                 .build();
-
-        // you may also want to take a look at some of the examples for instructions on
-        // how to have a switchable camera (switch back and forth between two cameras)
-        // or how to manually edit the exposure and gain, to account for different lighting conditions
-        // these may be extra features for you to work on to ensure that your robot performs
-        // consistently, even in different environments
     }
-
-    /**
-     * User-defined init_loop method
-     * <p>
-     * This method will be called repeatedly during the period between when
-     * the init button is pressed and when the play button is pressed (or the
-     * OpMode is stopped).
-     * <p>
-     * This method is optional. By default, this method takes no action.
-     */
     @Override
     public void init_loop() {
         telemetry.addData("Currently Recorded Position", cam.getRecordedPropPosition());
@@ -64,15 +43,7 @@ public class PropPipelineTuner extends OpMode {
         telemetry.addData("Currently Detected Mass Area", cam.getLargestContourArea());
     }
 
-    /**
-     * User-defined start method
-     * <p>
-     * This method will be called once, when the play button is pressed.
-     * <p>
-     * This method is optional. By default, this method takes no action.
-     * <p>
-     * Example usage: Starting another thread.
-     */
+
     @Override
     public void start() {
         if (visionPortal.getCameraState() == VisionPortal.CameraState.STREAMING) {
@@ -89,37 +60,22 @@ public class PropPipelineTuner extends OpMode {
 
         switch (recordedPropPosition) {
             case LEFT:
-                // code to do if we saw the prop on the left
+                // code if prop is left
                 break;
             case MIDDLE:
-                // code to do if we saw the prop on the middle
+                // code if prop is center
                 break;
             case RIGHT:
-                // code to do if we saw the prop on the right
+                // code if prop is right
                 break;
         }
     }
 
-    /**
-     * User-defined loop method
-     * <p>
-     * This method will be called repeatedly during the period between when
-     * the play button is pressed and when the OpMode is stopped.
-     */
     @Override
     public void loop() {
 
     }
 
-    /**
-     * User-defined stop method
-     * <p>
-     * This method will be called once, when this OpMode is stopped.
-     * <p>
-     * Your ability to control hardware from this method will be limited.
-     * <p>
-     * This method is optional. By default, this method takes no action.
-     */
     @Override
     public void stop() {
         cam.close();
