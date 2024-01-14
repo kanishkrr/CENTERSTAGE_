@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.opmodes.testing;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -21,7 +20,7 @@ import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
 
 import java.util.List;
 @Autonomous
-public class BCTwoPlusZeroPLTest extends LinearOpMode {
+public class BCPLTest extends LinearOpMode {
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
     private static final String TFOD_MODEL_ASSET = "model_20231018_181921.tflite";
     private static final String[] LABELS = {
