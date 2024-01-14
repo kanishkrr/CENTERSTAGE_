@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.teamcode.common.commandbase.Side;
 import org.firstinspires.ftc.teamcode.common.rr.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.common.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.common.subsystems.Intake;
@@ -17,8 +18,6 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 
 import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
-
-import org.firstinspires.ftc.teamcode.common.commandbase.Side;
 
 import java.util.List;
 @Autonomous
@@ -51,46 +50,51 @@ public class BCTwoPlusZeroPL extends LinearOpMode {
         start = new Pose2d(14, 61, Math.toRadians(-90));
         drive.setPoseEstimate(start);
 
-        waitForStart();
+        while (!opModeIsActive()) {
+            List<Recognition> currentRecognitions = tfod.getRecognitions();
+            currentRecognitions = tfod.getRecognitions();
 
-        List<Recognition> currentRecognitions = tfod.getRecognitions();
-        currentRecognitions = tfod.getRecognitions();
+            telemetryTfod();
 
-        telemetryTfod();
+            if(currentRecognitions.size() != 0){
+                float x1 = currentRecognitions.get(0).getLeft();
+                telemetry.addData("x-coordinate: ", x1);
+                telemetry.update();
+                System.out.println(x1);
 
-        if(currentRecognitions.size() != 0){
-            float x1 = currentRecognitions.get(0).getLeft();
-
-            if (x1 < 200) {
-                side = Side.LEFT;
-            } else {
                 side = Side.CENT;
+
+                if (x1 < 160) {
+                    side = Side.LEFT;
+                }
+
+                break;
+
+            } else {
+                side = Side.RIGHT;
             }
 
-        } else {
-            side = Side.RIGHT;
+            telemetry.addData("side", side);
+            telemetry.update();
         }
 
-        switch (side) {
+        switch(side) {
             case LEFT:
-                yellow = new Pose2d(43.4, 35, Math.toRadians(0));
-                purple = new Pose2d(37, 24.5, Math.toRadians(180));
+                yellow = new Pose2d(44.9, 36.2, Math.toRadians(0));
+                purple = new Pose2d(35.7, 24.5, Math.toRadians(180));
                 leftAdd = 12;
                 break;
             case CENT:
-                yellow = new Pose2d(43.4, 29.4, Math.toRadians(0));
+                yellow = new Pose2d(44.9, 29.4, Math.toRadians(0));
                 purple = new Pose2d(26, 17.3, Math.toRadians(180));
                 leftAdd = 26;
                 break;
             case RIGHT:
-                yellow = new Pose2d(43.9, 25.8, Math.toRadians(0));
+                yellow = new Pose2d(45.1, 25.8, Math.toRadians(0));
                 purple = new Pose2d(12.5, 26.5, Math.toRadians(180));
                 leftAdd = 16;
                 break;
         }
-
-
-
 
         TrajectorySequence traj = drive.trajectorySequenceBuilder(start)
                 .addDisplacementMarker(() -> {
@@ -130,6 +134,9 @@ public class BCTwoPlusZeroPL extends LinearOpMode {
 
 
 
+
+        waitForStart();
+        if (isStopRequested()) return;
         drive.followTrajectorySequence(traj);
 
     }

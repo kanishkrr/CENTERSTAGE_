@@ -67,17 +67,17 @@ public class BlueRoutePathing extends LinearOpMode {
         //recognition code here
 
         switch (side) {
-            case 1:
+            case 0:
                 yellow = new Pose2d(leftYellowX, leftYellowY, Math.toRadians(yellowHeading));
                 purple = new Pose2d(leftPurpleX, leftPurpleY, Math.toRadians(purpleHeading));
                 leftAdd = 12;
                 break;
-            case 2:
+            case 1:
                 yellow = new Pose2d(centerYellowX, centerYellowY, Math.toRadians(yellowHeading));
                 purple = new Pose2d(centerPurpleX, centerPurpleY, Math.toRadians(purpleHeading));
                 leftAdd = 26;
                 break;
-            case 3:
+            case 2:
                 yellow = new Pose2d(rightYellowX, rightYellowY, Math.toRadians(yellowHeading));
                 purple = new Pose2d(rightPurpleX, rightPurpleY, Math.toRadians(purpleHeading));
                 leftAdd = 16;
