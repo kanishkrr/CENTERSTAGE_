@@ -135,10 +135,10 @@ public class PropPipeline implements VisionProcessor, CameraStreamSource {
             propPosition = PropPositions.UNFOUND;
         } else if (largestContourX < left.getAsDouble()) {
             propPosition = PropPositions.LEFT;
-        } else if (largestContourX > right.getAsDouble()) {
-            propPosition = PropPositions.RIGHT;
-        } else {
+        } else if (largestContourX > left.getAsDouble()) {
             propPosition = PropPositions.MIDDLE;
+        } else {
+            propPosition = PropPositions.RIGHT;
         }
 
 

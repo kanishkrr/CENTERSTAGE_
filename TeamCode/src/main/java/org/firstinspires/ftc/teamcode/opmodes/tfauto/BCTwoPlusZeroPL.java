@@ -1,8 +1,8 @@
-package org.firstinspires.ftc.teamcode.opmodes.auto;
+package org.firstinspires.ftc.teamcode.opmodes.tfauto;
 
-import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
@@ -20,6 +20,7 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
 
 import java.util.List;
+@Disabled
 @Autonomous
 public class BCTwoPlusZeroPL extends LinearOpMode {
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera

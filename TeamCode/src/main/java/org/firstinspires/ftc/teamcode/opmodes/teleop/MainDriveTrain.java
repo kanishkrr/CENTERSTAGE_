@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name = "Main Drive Train")
-public class DriveTrain extends OpMode {
+public class MainDriveTrain extends OpMode {
 
     DcMotor RB, LB, RF, LF, Arm, Actuator;
 
