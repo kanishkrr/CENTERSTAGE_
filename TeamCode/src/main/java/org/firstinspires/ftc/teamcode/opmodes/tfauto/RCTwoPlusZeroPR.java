@@ -17,7 +17,7 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 
 import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
 
-import org.firstinspires.ftc.teamcode.common.commandbase.Side;
+import org.firstinspires.ftc.teamcode.common.centerstage.Side;
 
 import java.util.List;
 

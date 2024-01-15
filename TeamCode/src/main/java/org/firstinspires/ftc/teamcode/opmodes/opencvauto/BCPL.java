@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.common.commandbase.PoseStorage;
+import org.firstinspires.ftc.teamcode.common.centerstage.PoseStorage;
 import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.common.rr.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.common.subsystems.Arm;

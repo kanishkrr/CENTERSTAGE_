@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.common.commandbase;
+package org.firstinspires.ftc.teamcode.common.centerstage;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 

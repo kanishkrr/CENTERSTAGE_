@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.common.commandbase.PoseStorage;
+import org.firstinspires.ftc.teamcode.common.centerstage.PoseStorage;
 import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
 
 @TeleOp(group = "advancedrrteleop")

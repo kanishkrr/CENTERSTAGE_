@@ -16,7 +16,7 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 
 import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
 
-import org.firstinspires.ftc.teamcode.common.commandbase.Side;
+import org.firstinspires.ftc.teamcode.common.centerstage.Side;
 
 import java.util.List;
 
