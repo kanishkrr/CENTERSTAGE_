@@ -46,7 +46,7 @@ public class Camera {
                 .build();
     }
 
-    public PropPipeline.PropPositions start() {
+    public PropPipeline.PropPositions getRecog() {
         if (visionPortal.getCameraState() == VisionPortal.CameraState.STREAMING) {
             visionPortal.stopLiveView();
             visionPortal.stopStreaming();

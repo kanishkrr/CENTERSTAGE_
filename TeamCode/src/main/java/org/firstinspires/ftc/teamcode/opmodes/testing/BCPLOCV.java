@@ -1,9 +1,13 @@
 package org.firstinspires.ftc.teamcode.opmodes.testing;
 
+import androidx.annotation.NonNull;
+
 import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.common.rr.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.common.rr.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.common.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.common.subsystems.Intake;
@@ -39,7 +43,11 @@ public class BCPLOCV extends LinearOpMode {
         drive.setPoseEstimate(start);
 
         while (!opModeIsActive()) {
-            pos = cam.start();
+            pos = cam.getRecog();
+
+            if (pos == PropPipeline.PropPositions.LEFT || pos == PropPipeline.PropPositions.MIDDLE) {
+                break;
+            }
         }
 
         switch(pos) {
