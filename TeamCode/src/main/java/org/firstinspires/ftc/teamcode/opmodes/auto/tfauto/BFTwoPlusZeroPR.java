@@ -1,6 +1,5 @@
-package org.firstinspires.ftc.teamcode.opmodes.tfauto;
+package org.firstinspires.ftc.teamcode.opmodes.auto.tfauto;
 
-import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -22,35 +21,32 @@ import org.firstinspires.ftc.teamcode.common.centerstage.Side;
 import java.util.List;
 
 @Autonomous
-public class RCTwoPlusZeroPL extends LinearOpMode {
+public class BFTwoPlusZeroPR extends LinearOpMode {
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
-    private static final String TFOD_MODEL_ASSET = "model_20231027_204348.tflite";
+    private static final String TFOD_MODEL_ASSET = "model_20231018_181921.tflite";
     private static final String[] LABELS = {
             "team object",
     };
-
-    Side side;
-    Pose2d purple, yellow, start;
-    Vector2d parkLeft;
     private TfodProcessor tfod;
     private VisionPortal visionPortal;
+    Side side;
+    Pose2d purple, yellow, start, parkRight;
     Arm arm;
     Intake intake;
-    int leftAdd;
+    double leftDist;
 
     @Override
     public void runOpMode() {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
         arm = new Arm(hardwareMap);
-        arm.setP(0.23);
         intake = new Intake(hardwareMap);
+
         intake.initServos();
 
         initTfod();
 
-        parkLeft = new Vector2d(50.2, -9.6);
-        start = new Pose2d(14, -61, Math.toRadians(90));
-        drive.setPoseEstimate(start);
+        parkRight = new Pose2d(52.2, 10, Math.toRadians(180));
+        start = new Pose2d(-38, 61, Math.toRadians(-90));
 
         waitForStart();
 
@@ -61,9 +57,9 @@ public class RCTwoPlusZeroPL extends LinearOpMode {
             float x1 = currentRecognitions.get(0).getLeft();
             float y1 = currentRecognitions.get(0).getTop();
 
-            if (x1 < 150) {
+            if (x1 < 1000) {
                 side = Side.CENT;
-            } else if (x1 > 150) {
+            } else if (x1 > 1000) {
                 side = Side.RIGHT;
             } else {
                 side = Side.LEFT;
@@ -72,60 +68,53 @@ public class RCTwoPlusZeroPL extends LinearOpMode {
 
         switch (side) {
             case LEFT:
-                yellow = new Pose2d(43.9, -25.8, Math.toRadians(0));
-                purple = new Pose2d(12.5, -26.5, Math.toRadians(180));
-                leftAdd = 12;
+                yellow = new Pose2d(46.8, 37, Math.toRadians(0));
+                purple = new Pose2d(-34.3, 31.7, Math.toRadians(0));
+                leftDist = 26.5;
                 break;
             case CENT:
-                yellow = new Pose2d(43.4, -29.4, Math.toRadians(0));
-                purple = new Pose2d(26, 17.3, Math.toRadians(180));
-                leftAdd = 26;
+                yellow = new Pose2d(46.8, 33, Math.toRadians(0));
+                purple = new Pose2d(-44.3, 26, Math.toRadians(0));
+                leftDist = 32;
                 break;
             case RIGHT:
-                yellow = new Pose2d(43.4, -34, Math.toRadians(0));
-                purple = new Pose2d(37, -24.5, Math.toRadians(180));
-                leftAdd = 16;
+                yellow = new Pose2d(46.8, 27, Math.toRadians(0));
+                purple = new Pose2d(-56.3, 31.7, Math.toRadians(0));
+                leftDist = 26.5;
                 break;
         }
 
-
         TrajectorySequence traj = drive.trajectorySequenceBuilder(start)
+                .lineToLinearHeading(purple)
+                .addTemporalMarker(0.1, () -> {
+                    arm.setHeight(100, 0.3);
+                    intake.angleServoDown();
+                })
                 .addDisplacementMarker(() -> {
+                    intake.releaseFirstPixel();
+                })
+                .waitSeconds(9)
+                .strafeLeft(leftDist)
+                .forward(64)
+                .UNSTABLE_addTemporalMarkerOffset(0.1, () -> {
+                    arm.setHeight(70, 0.);
+                    intake.angleServoUp();
                     intake.angleServoMiddle();
                 })
-                .waitSeconds(0.5)
                 .lineToLinearHeading(yellow)
                 .addDisplacementMarker(() -> {
                     intake.releaseSecondPixel();
                 })
                 .waitSeconds(0.5)
-                .back(4)
-                .turn(Math.toRadians(180))
-                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> {
+                .back(14)
+                .strafeRight(4)
+                .UNSTABLE_addTemporalMarkerOffset(0.1, () -> {
+                    arm.setHeight(100, 0.34);
                     intake.angleServoDown();
                 })
-                .waitSeconds(1)
-                .lineToLinearHeading(purple)
-                .waitSeconds(0.5)
-                .UNSTABLE_addTemporalMarkerOffset(0.3, () -> {
-                    intake.releaseFirstPixel();
-                })
-                .waitSeconds(0.5)
-                .back(3)
-                .turn(Math.toRadians(-5))
-                .addDisplacementMarker(() -> {
-                    intake.initServos();
-                    intake.angleServoUp();
-                })
-                .back(6)
-                .waitSeconds(0.5)
-                .strafeRight(14+leftAdd)
-                .waitSeconds(0.5)
-                .splineToConstantHeading(parkLeft, Math.toRadians(180))
-                .back(5.5)
+                .lineToSplineHeading(parkRight)
+                .back(7)
                 .build();
-
-
 
         drive.followTrajectorySequence(traj);
 

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmodes.opencvauto;
+package org.firstinspires.ftc.teamcode.opmodes.auto.opencvauto;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
@@ -16,11 +16,11 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.opencv.core.Scalar;
 
 @Autonomous
-public class BCPR extends LinearOpMode {
+public class BCPL extends LinearOpMode {
     private VisionPortal visionPortal;
     private PropPipeline cam;
     Pose2d start;
-    Vector2d parkRight, rightAlign;
+    Vector2d parkLeft, leftAlign;
     Arm arm;
     Intake intake;
     TrajectorySequence traj;
@@ -34,13 +34,17 @@ public class BCPR extends LinearOpMode {
         arm.setP(0.23);
         intake = new Intake(hardwareMap);
         intake.initServos();
-        parkRight = new Vector2d(55, 8);
-        rightAlign = new Vector2d(37, 8);
+        parkLeft = new Vector2d(55, 59.6);
+        leftAlign = new Vector2d(37, 59.6);
         start = new Pose2d(14, 61, Math.toRadians(-90));
         drive.setPoseEstimate(start);
         //tuned for red, need to tune it for blue
         Scalar lower = new Scalar(80, 180, 130);
         Scalar upper = new Scalar(135, 255, 255);
+        /*
+        Scalar lower = new Scalar(150, 100, 100); for red
+        Scalar upper = new Scalar(180, 255, 255);
+         */
         double minArea = 7000; //area to detect obj
 
         cam = new PropPipeline(
@@ -85,10 +89,10 @@ public class BCPR extends LinearOpMode {
                         }).lineToLinearHeading(new Pose2d(35.7, 24.5, Math.toRadians(180)))
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.releaseFirstPixel();
-                        }).back(4).turn(Math.toRadians(-5)).splineToConstantHeading(rightAlign, Math.toRadians(180))
+                        }).back(4).turn(Math.toRadians(5)).splineToConstantHeading(leftAlign, Math.toRadians(180))
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.angleServoUp();
-                        }).waitSeconds(0.2).splineToConstantHeading(parkRight, Math.toRadians(180)).build();
+                        }).waitSeconds(0.2).splineToConstantHeading(parkLeft, Math.toRadians(180)).build();
                 break;
             case MIDDLE:
                 traj = drive.trajectorySequenceBuilder(start)
@@ -102,11 +106,11 @@ public class BCPR extends LinearOpMode {
                         }).lineToLinearHeading(new Pose2d(26, 17.7, Math.toRadians(180)))
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.releaseFirstPixel();
-                        }).back(3).turn(Math.toRadians(-5)).splineToConstantHeading(rightAlign, Math.toRadians(180))
+                        }).back(3).turn(Math.toRadians(5)).splineToConstantHeading(leftAlign, Math.toRadians(180))
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.initServos();
                             intake.angleServoUp();
-                        }).waitSeconds(0.2).splineToConstantHeading(parkRight, Math.toRadians(180)).build();
+                        }).waitSeconds(0.2).splineToConstantHeading(parkLeft, Math.toRadians(180)).build();
                 break;
             case RIGHT:
                 traj = drive.trajectorySequenceBuilder(start)
@@ -121,11 +125,11 @@ public class BCPR extends LinearOpMode {
                         }).lineToLinearHeading(new Pose2d(13.5, 28.5, Math.toRadians(180)))
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.releaseFirstPixel();
-                        }).back(4).turn(Math.toRadians(-5)).splineToConstantHeading(rightAlign, Math.toRadians(180))
+                        }).back(4).turn(Math.toRadians(5)).splineToConstantHeading(leftAlign, Math.toRadians(180))
                         .UNSTABLE_addTemporalMarkerOffset(0,() -> {
                             intake.initServos();
                             intake.angleServoUp();
-                        }).waitSeconds(0.2).splineToConstantHeading(parkRight, Math.toRadians(180)).build();
+                        }).waitSeconds(0.2).splineToConstantHeading(parkLeft, Math.toRadians(180)).build();
                 break;
         }
 

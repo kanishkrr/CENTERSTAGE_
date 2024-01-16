@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.drive.advanced;
+package org.firstinspires.ftc.teamcode.opmodes.testing;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
@@ -9,13 +9,13 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.common.centerstage.PoseStorage;
 import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
 
-@TeleOp(group = "advancedrrteleop")
+@TeleOp(group = "TeleOpRR")
 public class TeleOpRR extends LinearOpMode {
     enum Mode {
         DRIVER_CONTROL,
         AUTOMATIC_CONTROL
     }
-    Pose2d targetPose;
+    Pose2d targetPose, pickUpPose;
     Mode currentMode = Mode.DRIVER_CONTROL;
 
     @Override
@@ -24,6 +24,7 @@ public class TeleOpRR extends LinearOpMode {
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         drive.setPoseEstimate(PoseStorage.currentPose);
         targetPose = new Pose2d(44.9, 36.2, Math.toRadians(180));
+        pickUpPose = new Pose2d(-52,-52, Math.toRadians(225));
 
         waitForStart();
 
@@ -47,12 +48,20 @@ public class TeleOpRR extends LinearOpMode {
                                     -gamepad1.right_stick_x*0.75
                             )
                     );
-                    if (gamepad1.a) {
-                        Trajectory traj1 = drive.trajectoryBuilder(poseEstimate)
+                    if (gamepad1.right_bumper) {
+                        Trajectory toBoard = drive.trajectoryBuilder(poseEstimate)
                                 .lineToLinearHeading(targetPose)
                                 .build();
 
-                        drive.followTrajectoryAsync(traj1);
+                        drive.followTrajectoryAsync(toBoard);
+                        currentMode = Mode.AUTOMATIC_CONTROL;
+                    }
+                    if (gamepad1.left_bumper) {
+                        Trajectory toHuman = drive.trajectoryBuilder(poseEstimate)
+                                .lineToLinearHeading(targetPose)
+                                .build();
+
+                        drive.followTrajectoryAsync(toHuman);
                         currentMode = Mode.AUTOMATIC_CONTROL;
                     }
                     break;
