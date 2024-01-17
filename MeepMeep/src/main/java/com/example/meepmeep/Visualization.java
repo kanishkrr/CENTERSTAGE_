@@ -11,9 +11,8 @@ public class Visualization {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
 
-        Pose2d yellow = new Pose2d(46.8, 37, Math.toRadians(0));
-
-        Vector2d parkLeft = new Vector2d(55, 58.6);
+        Vector2d parkLeft = new Vector2d(55, -9);
+        Vector2d leftAlign = new Vector2d(42, -9);
 
 
 
@@ -21,17 +20,13 @@ public class Visualization {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(30, 30, Math.toRadians(150), Math.toRadians(150), 17.2)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(-38, 61, Math.toRadians(-90)))
-                        .strafeTo(new Vector2d(-42, 59))
-                        .lineToLinearHeading(new Pose2d(-35.3, 34.3, Math.toRadians(0)))
-                        .waitSeconds(7)
-                        .back(8)
-                        .splineToConstantHeading(new Vector2d(-21.9, 8.5), Math.toRadians(0))
-                        .forward(26)
-                        .splineToConstantHeading(new Vector2d(44.9, 36.2), Math.toRadians(0))
-                        .strafeLeft(18)
-                        .turn(Math.toRadians(180))
-                        .strafeTo(parkLeft)
+                        drive.trajectorySequenceBuilder(new Pose2d(14, -61, Math.toRadians(90)))
+                        .strafeTo(new Vector2d(18, -59))
+                        .lineToLinearHeading(new Pose2d(9.7, -33, Math.toRadians(180)))
+                        .back(16)
+                        .lineToLinearHeading(new Pose2d(44.9, -30, Math.toRadians(0)))
+                        .strafeTo(leftAlign)
+                        .lineToLinearHeading(new Pose2d(parkLeft, Math.toRadians(180)))
                         .build()
 
 
