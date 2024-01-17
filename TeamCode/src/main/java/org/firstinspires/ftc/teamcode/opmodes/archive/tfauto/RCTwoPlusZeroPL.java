@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmodes.auto.tfauto;
+package org.firstinspires.ftc.teamcode.opmodes.archive.tfauto;
 
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
