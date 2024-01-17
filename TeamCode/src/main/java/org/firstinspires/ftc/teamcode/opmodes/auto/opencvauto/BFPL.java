@@ -41,7 +41,7 @@ public class BFPL extends LinearOpMode {
         //tuned for red, need to tune it for blue
         Scalar lower = new Scalar(80, 180, 130);
         Scalar upper = new Scalar(135, 255, 255);
-        double minArea = 7000; //area to detect obj
+        double minArea = 9000; //area to detect obj
 
         cam = new PropPipeline(
                 lower,

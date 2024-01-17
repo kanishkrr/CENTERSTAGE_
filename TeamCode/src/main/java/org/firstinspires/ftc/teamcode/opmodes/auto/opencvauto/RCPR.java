@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.opmodes.auto.opencvauto;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
@@ -16,17 +17,16 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.opencv.core.Scalar;
 
 @Autonomous
-public class BFPR extends LinearOpMode {
+public class RCPR extends LinearOpMode {
     private VisionPortal visionPortal;
     private PropPipeline cam;
     Pose2d start;
-    Vector2d parkRight;
+    Vector2d parkRight, rightAlign;
     Arm arm;
     Intake intake;
-    TrajectorySequence traj;
+    TrajectorySequence traj, moveRight;
     SampleMecanumDrive drive;
     PropPipeline.PropPositions recordedPropPosition;
-    TrajectorySequence moveRight;
 
     @Override
     public void runOpMode() {
@@ -35,19 +35,21 @@ public class BFPR extends LinearOpMode {
         arm.setP(0.23);
         intake = new Intake(hardwareMap);
         intake.initServos();
-        parkRight = new Vector2d(55, 8);
-        start =  new Pose2d(-38, 61, Math.toRadians(-90));
+        parkRight = new Vector2d(55, -59.6);
+        rightAlign = new Vector2d(42, -59.6);
+        start = new Pose2d(14, -61, Math.toRadians(90));
         drive.setPoseEstimate(start);
-        //tuned for red, need to tune it for blue
-        Scalar lower = new Scalar(80, 180, 130);
-        Scalar upper = new Scalar(135, 255, 255);
+
+        Scalar lower = new Scalar(150, 100, 100);
+        Scalar upper = new Scalar(180, 255, 255);
+
         double minArea = 9000; //area to detect obj
 
         cam = new PropPipeline(
                 lower,
                 upper,
                 () -> minArea,
-                () -> 250, // left div. line
+                () -> 200, // left div. line
                 () -> 650 // right div. line
         );
         visionPortal = new VisionPortal.Builder()
@@ -55,15 +57,15 @@ public class BFPR extends LinearOpMode {
                 .addProcessor(cam)
                 .build();
 
-
         moveRight = drive.trajectorySequenceBuilder(start)
-                .strafeTo(new Vector2d(-42, 59))
+                .strafeTo(new Vector2d(18, -59))
                 .build();
 
         waitForStart();
         if (isStopRequested()) return;
 
         drive.followTrajectorySequence(moveRight);
+
 
         recordedPropPosition = cam.getRecordedPropPosition();
 
@@ -87,62 +89,58 @@ public class BFPR extends LinearOpMode {
         switch (recordedPropPosition) {
             case LEFT:
                 traj = drive.trajectorySequenceBuilder(start)
-                        .UNSTABLE_addTemporalMarkerOffset(0, ()-> {
-                            intake.angleServoDown();
-                        }).lineToLinearHeading(new Pose2d(-35.3, 34.3, Math.toRadians(0)))
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                            intake.angleServoDown();
+                        }).lineToLinearHeading(new Pose2d(9.7, -33, Math.toRadians(180)))
+                        .UNSTABLE_addDisplacementMarkerOffset(0, () -> {
                             intake.releaseFirstPixel();
-                        }).waitSeconds(7).back(8).splineToConstantHeading(new Vector2d(-21.9, 8.5), Math.toRadians(0))
-                        .forward(26).UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                        }).back(16).UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.angleServoUp();
                             intake.angleServoMiddle();
-                        }).splineToConstantHeading(new Vector2d(44.9, 36.2), Math.toRadians(0))
-                        .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                        }).lineToLinearHeading(new Pose2d(44.9, -30, Math.toRadians(0)))
+                        .UNSTABLE_addDisplacementMarkerOffset(0, () -> {
                             intake.releaseSecondPixel();
-                        }).UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                        }).UNSTABLE_addTemporalMarkerOffset(0.5, () -> {
                             intake.angleServoUp();
-                        }).strafeTo(new Vector2d(44, 8)).turn(Math.toRadians(180))
-                        .strafeTo(parkRight).build();
+                        }).strafeTo(rightAlign).lineToLinearHeading(new Pose2d(parkRight, Math.toRadians(180)))
+                        .build();
+
                 break;
             case MIDDLE:
                 traj = drive.trajectorySequenceBuilder(start)
-                        .UNSTABLE_addTemporalMarkerOffset(0, ()-> {
+                        .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.angleServoDown();
-                        }).splineToConstantHeading(new Vector2d(-32.7, 33.3), Math.toRadians(-90))
-                        .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                        }).splineToConstantHeading(new Vector2d(13, -34), Math.toRadians(90))
+                        .UNSTABLE_addDisplacementMarkerOffset(0, () -> {
                             intake.releaseFirstPixel();
-                        }).back(2.5).turn(Math.toRadians(90)).waitSeconds(10).forward(50)
-                        .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                        }).strafeRight(16).UNSTABLE_addDisplacementMarkerOffset(0, () -> {
                             intake.angleServoUp();
                             intake.angleServoMiddle();
-                        }).splineToConstantHeading(new Vector2d(44.9, 29.4), Math.toRadians(0))
-                        .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                        }).lineToLinearHeading(new Pose2d(44.9, -29.4, Math.toRadians(0)))
+                        .UNSTABLE_addDisplacementMarkerOffset(0, () -> {
                             intake.releaseSecondPixel();
-                        }).UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                        }).UNSTABLE_addDisplacementMarkerOffset(1, () -> {
                             intake.angleServoUp();
-                        }).strafeTo(new Vector2d(44, 8)).turn(Math.toRadians(180))
-                        .strafeTo(parkRight).build();
+                        }).strafeTo(rightAlign).lineToLinearHeading(new Pose2d(parkRight, Math.toRadians(180))).build();
+
                 break;
             case RIGHT:
                 traj = drive.trajectorySequenceBuilder(start)
-                        .UNSTABLE_addTemporalMarkerOffset(0, ()-> {
+                        .UNSTABLE_addDisplacementMarkerOffset(0, () -> {
                             intake.angleServoDown();
-                        }).splineToConstantHeading(new Vector2d(-43.7, 37.3), Math.toRadians(-90))
+                        }).splineToConstantHeading(new Vector2d(20, -37), Math.toRadians(90))
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.releaseFirstPixel();
-                        }).strafeLeft(8)
-                        .lineToLinearHeading(new Pose2d(-30, 11, Math.toRadians(0)))
-                        .splineToLinearHeading(new Pose2d(-8.6, 9.5), Math.toRadians(0))
-                        .waitSeconds(8)
-                        .UNSTABLE_addTemporalMarkerOffset(2, () -> {
+                        }).strafeRight(16).UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.angleServoUp();
                             intake.angleServoMiddle();
-                        }).splineTo(new Vector2d(45.1, 25.8), Math.toRadians(0))
+                        }).lineToLinearHeading(new Pose2d(44.9, -36, Math.toRadians(0)))
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.releaseSecondPixel();
                         }).UNSTABLE_addTemporalMarkerOffset(1, () -> {
                             intake.angleServoUp();
-                        }).strafeTo(new Vector2d(44, 8)).turn(Math.toRadians(180)).strafeTo(parkRight).build();
+                        }).strafeTo(rightAlign).lineToLinearHeading(new Pose2d(parkRight, Math.toRadians(180))).build();
+
                 break;
         }
 
