@@ -25,7 +25,7 @@ import java.util.List;
 @Autonomous
 public class BCTwoPlusZeroPR extends LinearOpMode {
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
-    private static final String TFOD_MODEL_ASSET = "model_20231018_181921.tflite"; //"model_20231027_204348.tflite"
+    private static final String TFOD_MODEL_ASSET = "Blue.tflite"; //"Red.tflite"
     private static final String[] LABELS = {
             "team object",
     };

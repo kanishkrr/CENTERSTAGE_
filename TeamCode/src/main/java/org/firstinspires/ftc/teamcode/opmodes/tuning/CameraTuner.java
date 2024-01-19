@@ -16,7 +16,7 @@ import java.util.List;
 @Autonomous
 public class CameraTuner extends LinearOpMode {
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
-    private static final String TFOD_MODEL_ASSET = "model_20231018_181921.tflite";
+    private static final String TFOD_MODEL_ASSET = "Blue.tflite";
     private static final String[] LABELS = {
             "team object",
     };

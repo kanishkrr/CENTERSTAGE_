@@ -94,15 +94,15 @@ public class BCPR extends LinearOpMode {
                 traj = drive.trajectorySequenceBuilder(start)
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.angleServoMiddle();
-                        }).lineToLinearHeading(new Pose2d(44.9, 29.4, Math.toRadians(0)))
+                        }).lineToLinearHeading(new Pose2d(44.9, 31.4, Math.toRadians(0)))
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.releaseSecondPixel();
                         }).back(5).turn(Math.toRadians(180)).UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.angleServoDown();
-                        }).lineToLinearHeading(new Pose2d(26, 17.7, Math.toRadians(180)))
+                        }).lineToLinearHeading(new Pose2d(26, 19.7, Math.toRadians(180)))
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.releaseFirstPixel();
-                        }).back(3).turn(Math.toRadians(-5)).splineToConstantHeading(rightAlign, Math.toRadians(180))
+                        }).back(3).turn(Math.toRadians(5)).splineToConstantHeading(rightAlign, Math.toRadians(180))
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.initServos();
                             intake.angleServoUp();
@@ -112,16 +112,17 @@ public class BCPR extends LinearOpMode {
                 traj = drive.trajectorySequenceBuilder(start)
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.angleServoMiddle();
-                        }).lineToLinearHeading(new Pose2d(45.1, 25.8, Math.toRadians(0)))
+                        }).lineToLinearHeading(new Pose2d(45.1, 25, Math.toRadians(0)))
                         .UNSTABLE_addTemporalMarkerOffset(0,() -> {
                             intake.releaseSecondPixel();
                         }).back(5).turn(Math.toRadians(180))
-                        .UNSTABLE_addTemporalMarkerOffset(0.5, () -> {
+                        .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.angleServoDown();
-                        }).lineToLinearHeading(new Pose2d(13.5, 28.5, Math.toRadians(180)))
+                            intake.initServos();
+                        }).lineToLinearHeading(new Pose2d(13.6, 25.5, Math.toRadians(180)))
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.releaseFirstPixel();
-                        }).back(4).turn(Math.toRadians(-5)).splineToConstantHeading(rightAlign, Math.toRadians(180))
+                        }).back(4).back(8).splineToConstantHeading(rightAlign, Math.toRadians(180))
                         .UNSTABLE_addTemporalMarkerOffset(0,() -> {
                             intake.initServos();
                             intake.angleServoUp();

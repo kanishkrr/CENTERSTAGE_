@@ -16,7 +16,7 @@ import org.firstinspires.ftc.vision.VisionPortal;
 import org.opencv.core.Scalar;
 
 @Autonomous
-public class BCPL extends LinearOpMode {
+public class RFPL extends LinearOpMode {
     private VisionPortal visionPortal;
     private PropPipeline cam;
     Pose2d start;
@@ -34,12 +34,13 @@ public class BCPL extends LinearOpMode {
         arm.setP(0.23);
         intake = new Intake(hardwareMap);
         intake.initServos();
-        parkLeft = new Vector2d(55, 58);
-        leftAlign = new Vector2d(37, 58);
+        parkLeft = new Vector2d(55, 59.6);
+        leftAlign = new Vector2d(37, 59.6);
         start = new Pose2d(14, 61, Math.toRadians(-90));
         drive.setPoseEstimate(start);
-        Scalar lower = new Scalar(80, 180, 130);
-        Scalar upper = new Scalar(135, 255, 255);
+
+        Scalar lower = new Scalar(150, 100, 100);
+        Scalar upper = new Scalar(180, 255, 255);
         double minArea = 7000; //area to detect obj
 
         cam = new PropPipeline(
@@ -81,7 +82,6 @@ public class BCPL extends LinearOpMode {
                         }).back(5).turn(Math.toRadians(180))
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.angleServoDown();
-                            intake.initServos();
                         }).lineToLinearHeading(new Pose2d(35.7, 24.5, Math.toRadians(180)))
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.releaseFirstPixel();
@@ -94,12 +94,12 @@ public class BCPL extends LinearOpMode {
                 traj = drive.trajectorySequenceBuilder(start)
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.angleServoMiddle();
-                        }).lineToLinearHeading(new Pose2d(44.9, 31.4, Math.toRadians(0)))
+                        }).lineToLinearHeading(new Pose2d(44.9, 29.4, Math.toRadians(0)))
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.releaseSecondPixel();
                         }).back(5).turn(Math.toRadians(180)).UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.angleServoDown();
-                        }).lineToLinearHeading(new Pose2d(26, 19.7, Math.toRadians(180)))
+                        }).lineToLinearHeading(new Pose2d(26, 17.7, Math.toRadians(180)))
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.releaseFirstPixel();
                         }).back(3).turn(Math.toRadians(5)).splineToConstantHeading(leftAlign, Math.toRadians(180))
@@ -112,14 +112,13 @@ public class BCPL extends LinearOpMode {
                 traj = drive.trajectorySequenceBuilder(start)
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.angleServoMiddle();
-                        }).lineToLinearHeading(new Pose2d(45.1, 25, Math.toRadians(0)))
+                        }).lineToLinearHeading(new Pose2d(45.1, 25.8, Math.toRadians(0)))
                         .UNSTABLE_addTemporalMarkerOffset(0,() -> {
                             intake.releaseSecondPixel();
                         }).back(5).turn(Math.toRadians(180))
-                        .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                        .UNSTABLE_addTemporalMarkerOffset(0.5, () -> {
                             intake.angleServoDown();
-                            intake.initServos();
-                        }).lineToLinearHeading(new Pose2d(14.1, 25.5, Math.toRadians(180)))
+                        }).lineToLinearHeading(new Pose2d(13.5, 28.5, Math.toRadians(180)))
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.releaseFirstPixel();
                         }).back(4).turn(Math.toRadians(5)).splineToConstantHeading(leftAlign, Math.toRadians(180))
