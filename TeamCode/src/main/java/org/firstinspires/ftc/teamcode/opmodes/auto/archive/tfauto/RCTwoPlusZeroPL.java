@@ -1,8 +1,7 @@
-package org.firstinspires.ftc.teamcode.opmodes.archive.tfauto;
+package org.firstinspires.ftc.teamcode.opmodes.auto.archive.tfauto;
 
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
@@ -21,11 +20,11 @@ import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.common.centerstage.Side;
 
 import java.util.List;
-@Disabled
+
 @Autonomous
-public class BCTwoPlusZeroPR extends LinearOpMode {
+public class RCTwoPlusZeroPL extends LinearOpMode {
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
-    private static final String TFOD_MODEL_ASSET = "Blue.tflite"; //"Red.tflite"
+    private static final String TFOD_MODEL_ASSET = "Red.tflite";
     private static final String[] LABELS = {
             "team object",
     };
@@ -49,8 +48,8 @@ public class BCTwoPlusZeroPR extends LinearOpMode {
 
         initTfod();
 
-        parkLeft = new Vector2d(50.2, 9.6);
-        start = new Pose2d(14, 61, Math.toRadians(-90));
+        parkLeft = new Vector2d(50.2, -9.6);
+        start = new Pose2d(14, -61, Math.toRadians(90));
         drive.setPoseEstimate(start);
 
         waitForStart();
@@ -63,29 +62,29 @@ public class BCTwoPlusZeroPR extends LinearOpMode {
             float y1 = currentRecognitions.get(0).getTop();
 
             if (x1 < 150) {
-                side = Side.LEFT;
-            } else if (x1 > 150) {
                 side = Side.CENT;
-            } else {
+            } else if (x1 > 150) {
                 side = Side.RIGHT;
+            } else {
+                side = Side.LEFT;
             }
         }
 
         switch (side) {
             case LEFT:
-                yellow = new Pose2d(43.4, 34, Math.toRadians(0));
-                purple = new Pose2d(37, 24.5, Math.toRadians(180));
-                leftAdd = 20;
+                yellow = new Pose2d(43.9, -25.8, Math.toRadians(0));
+                purple = new Pose2d(12.5, -26.5, Math.toRadians(180));
+                leftAdd = 12;
                 break;
             case CENT:
-                yellow = new Pose2d(43.4, 29.4, Math.toRadians(0));
+                yellow = new Pose2d(43.4, -29.4, Math.toRadians(0));
                 purple = new Pose2d(26, 17.3, Math.toRadians(180));
-                leftAdd = 14;
+                leftAdd = 26;
                 break;
             case RIGHT:
-                yellow = new Pose2d(43.9, 25.8, Math.toRadians(0));
-                purple = new Pose2d(12.5, 26.5, Math.toRadians(180));
-                leftAdd = 20;
+                yellow = new Pose2d(43.4, -34, Math.toRadians(0));
+                purple = new Pose2d(37, -24.5, Math.toRadians(180));
+                leftAdd = 16;
                 break;
         }
 
@@ -120,7 +119,7 @@ public class BCTwoPlusZeroPR extends LinearOpMode {
                 })
                 .back(6)
                 .waitSeconds(0.5)
-                .strafeLeft(14+leftAdd)
+                .strafeRight(14+leftAdd)
                 .waitSeconds(0.5)
                 .splineToConstantHeading(parkLeft, Math.toRadians(180))
                 .back(5.5)

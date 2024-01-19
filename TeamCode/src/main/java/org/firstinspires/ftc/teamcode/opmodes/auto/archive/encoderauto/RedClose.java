@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmodes.archive.encoderauto;
+package org.firstinspires.ftc.teamcode.opmodes.auto.archive.encoderauto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -14,13 +14,13 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import java.util.List;
 @Disabled
-@Autonomous(name = "BlueAutoClose")
-public class BlueClose extends LinearOpMode {
+@Autonomous(name = "RedAutoClose")
+public class RedClose extends LinearOpMode {
 
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
-    private static final String TFOD_MODEL_ASSET = "Blue.tflite";
+    private static final String TFOD_MODEL_ASSET = "Red.tflite";
     private static final String[] LABELS = {
-            "team object",
+            "red_object",
     };
     private TfodProcessor tfod;
 
@@ -225,54 +225,53 @@ public class BlueClose extends LinearOpMode {
 
         if (currentRecognitions.size() != 0) {
             angleServoDown();
-            moveForward(25);
-            moveBackward(2);
+            moveForward(24);
+            moveBackward(1);
             releaseFirstPixel();
             moveBackward(2);
             angleServoUp();
             angleServoMiddle();
-            rotate(87);
-            moveForward(30);
-            strafeRight(6);
-            moveForward(5);
+            rotate(-90);
+            moveForward(37);
+            strafeLeft(3);
+            moveForward(2);
             releaseSecondPixel();
-            angleServoUp();
             moveBackward(2);
-            strafeLeft(23);
-            moveForward(4);
+            angleServoUp();
+            strafeRight(20);
+            moveForward(1);
 
         }
         else {
-            strafeLeft(11);
+            strafeRight(10);
             sleep(3000);
             currentRecognitions = tfod.getRecognitions();
             telemetry.addData("Recs", currentRecognitions);
             telemetry.update();
             if (currentRecognitions.size() != 0) {
+                strafeLeft(2);
                 Arm.setPower(0.23);
                 angleServoDown();
-                strafeLeft(2);
                 moveForward(20);
                 moveBackward(2);
                 releaseFirstPixel();
                 moveBackward(4);
-                rotate(90);
+                rotate(-90);
                 angleServoUp();
                 angleServoMiddle();
                 moveForward(18);
-                strafeRight(7);
-                moveForward(3);
+                strafeLeft(7);
+                moveForward(10);
                 stopMovement(2000);
                 releaseSecondPixel();
-                angleServoUp();
                 moveBackward(2);
-                strafeLeft(17);
+                angleServoUp();
             }
             else {
                 moveForward(26);
                 Arm.setPower(0.23);
                 angleServoDown();
-                rotate(-90);
+                rotate(90);
                 moveForward(10);
                 stopMovement(2000);
                 releaseFirstPixel();
@@ -280,16 +279,15 @@ public class BlueClose extends LinearOpMode {
                 stopMovement(500);
                 angleServoUp();
                 moveBackward(5);
-                rotate(-180);
+                rotate(180);
                 angleServoMiddle();
                 moveForward(20);
                 sleep(1500);
-                strafeRight(3);
-                moveForward(8);
+                strafeLeft(3);
+                moveForward(7);
                 releaseSecondPixel();
-                moveBackward(2);
-                angleServoUp();
-                strafeLeft(20);
+                moveBackward(3);
+                angleServoDown();
             }
         }   }
 
