@@ -35,19 +35,19 @@ public class BFPR extends LinearOpMode {
         arm.setP(0.23);
         intake = new Intake(hardwareMap);
         intake.initServos();
-        parkRight = new Vector2d(55, 8);
+        parkRight = new Vector2d(57, 8);
         start =  new Pose2d(-38, 61, Math.toRadians(-90));
         drive.setPoseEstimate(start);
         //tuned for red, need to tune it for blue
         Scalar lower = new Scalar(80, 180, 130);
         Scalar upper = new Scalar(135, 255, 255);
-        double minArea = 9000; //area to detect obj
+        double minArea = 8200; //area to detect obj
 
         cam = new PropPipeline(
                 lower,
                 upper,
                 () -> minArea,
-                () -> 250, // left div. line
+                () -> 350, // left div. line
                 () -> 650 // right div. line
         );
         visionPortal = new VisionPortal.Builder()
@@ -89,60 +89,64 @@ public class BFPR extends LinearOpMode {
                 traj = drive.trajectorySequenceBuilder(start)
                         .UNSTABLE_addTemporalMarkerOffset(0, ()-> {
                             intake.angleServoDown();
-                        }).lineToLinearHeading(new Pose2d(-35.3, 34.3, Math.toRadians(0)))
+                        }).forward(8).lineToLinearHeading(new Pose2d(-38, 28.3, Math.toRadians(0)))
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.releaseFirstPixel();
-                        }).waitSeconds(7).back(8).splineToConstantHeading(new Vector2d(-21.9, 8.5), Math.toRadians(0))
-                        .forward(26).UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                        }).waitSeconds(7).back(8).strafeRight(16)
+                        .splineToConstantHeading(new Vector2d(-21.9, 8.5), Math.toRadians(0))
+                        .UNSTABLE_addTemporalMarkerOffset(1, () -> {
                             intake.angleServoUp();
+                        }).UNSTABLE_addTemporalMarkerOffset(2.2, () -> {
                             intake.angleServoMiddle();
-                        }).splineToConstantHeading(new Vector2d(44.9, 36.2), Math.toRadians(0))
+                        }).forward(36).splineToConstantHeading(new Vector2d(48, 41.8), Math.toRadians(0))
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.releaseSecondPixel();
                         }).UNSTABLE_addTemporalMarkerOffset(1, () -> {
                             intake.angleServoUp();
-                        }).strafeTo(new Vector2d(44, 8)).turn(Math.toRadians(180))
-                        .strafeTo(parkRight).build();
+                        }).back(3).strafeTo(new Vector2d(42, 8)).turn(Math.toRadians(180))
+                        .lineToLinearHeading(new Pose2d(parkRight, Math.toRadians(180))).build();
                 break;
             case MIDDLE:
                 traj = drive.trajectorySequenceBuilder(start)
                         .UNSTABLE_addTemporalMarkerOffset(0, ()-> {
                             intake.angleServoDown();
-                        }).splineToConstantHeading(new Vector2d(-32.7, 33.3), Math.toRadians(-90))
+                        }).lineToLinearHeading(new Pose2d(-50, 24, Math.toRadians(0)))
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.releaseFirstPixel();
-                        }).back(2.5).turn(Math.toRadians(90)).waitSeconds(10).forward(50)
-                        .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                        }).waitSeconds(8).strafeLeft(3).back(6).strafeRight(14).splineToConstantHeading(new Vector2d(-21.9, 8.5), Math.toRadians(0))
+                        .UNSTABLE_addTemporalMarkerOffset(1, () -> {
                             intake.angleServoUp();
+                        }).UNSTABLE_addTemporalMarkerOffset(2.2, () -> {
                             intake.angleServoMiddle();
-                        }).splineToConstantHeading(new Vector2d(44.9, 29.4), Math.toRadians(0))
+                        }).forward(36).splineToConstantHeading(new Vector2d(48, 37), Math.toRadians(0))
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.releaseSecondPixel();
-                        }).UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                        }).waitSeconds(0.2).UNSTABLE_addTemporalMarkerOffset(0.8, () -> {
                             intake.angleServoUp();
-                        }).strafeTo(new Vector2d(44, 8)).turn(Math.toRadians(180))
-                        .strafeTo(parkRight).build();
+                        }).back(3).strafeTo(new Vector2d(45, 8)).turn(Math.toRadians(180))
+                        .lineToLinearHeading(new Pose2d(parkRight, Math.toRadians(180))).build();
+
                 break;
             case RIGHT:
                 traj = drive.trajectorySequenceBuilder(start)
                         .UNSTABLE_addTemporalMarkerOffset(0, ()-> {
                             intake.angleServoDown();
-                        }).splineToConstantHeading(new Vector2d(-43.7, 37.3), Math.toRadians(-90))
+                        }).forward(8).lineToLinearHeading(new Pose2d(-59, 28.3, Math.toRadians(0)))
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.releaseFirstPixel();
-                        }).strafeLeft(8)
-                        .lineToLinearHeading(new Pose2d(-30, 11, Math.toRadians(0)))
-                        .splineToLinearHeading(new Pose2d(-8.6, 9.5), Math.toRadians(0))
-                        .waitSeconds(8)
-                        .UNSTABLE_addTemporalMarkerOffset(2, () -> {
+                        }).waitSeconds(7).strafeRight(16)
+                        .splineToConstantHeading(new Vector2d(-21.9, 8.5), Math.toRadians(0))
+                        .UNSTABLE_addTemporalMarkerOffset(1, () -> {
                             intake.angleServoUp();
+                        }).UNSTABLE_addTemporalMarkerOffset(2.2, () -> {
                             intake.angleServoMiddle();
-                        }).splineTo(new Vector2d(45.1, 25.8), Math.toRadians(0))
+                        }).forward(36).splineToConstantHeading(new Vector2d(48, 32.5), Math.toRadians(0))
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.releaseSecondPixel();
-                        }).UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                        }).back(3).UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.angleServoUp();
-                        }).strafeTo(new Vector2d(44, 8)).turn(Math.toRadians(180)).strafeTo(parkRight).build();
+                        }).strafeTo(new Vector2d(42, 8)).turn(Math.toRadians(180))
+                        .lineToLinearHeading(new Pose2d(parkRight, Math.toRadians(180))).build();
                 break;
         }
 

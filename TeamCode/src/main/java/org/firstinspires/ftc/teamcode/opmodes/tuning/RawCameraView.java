@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.common.centerstage.Side;
 import java.util.List;
 
 @Autonomous
-public class CameraTuner extends LinearOpMode {
+public class RawCameraView extends LinearOpMode {
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
     private static final String TFOD_MODEL_ASSET = "Blue.tflite";
     private static final String[] LABELS = {

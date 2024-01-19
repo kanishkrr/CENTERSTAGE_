@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.common.centerstage.PoseStorage;
 import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
 
 @TeleOp(group = "TeleOpRR")
-public class TeleOpRR extends LinearOpMode {
+public class TrajectoryTeleOpTest extends LinearOpMode {
     enum Mode {
         DRIVER_CONTROL,
         AUTOMATIC_CONTROL
