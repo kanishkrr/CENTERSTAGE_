@@ -40,17 +40,17 @@ public class RCPL extends LinearOpMode {
         start = new Pose2d(14, -61, Math.toRadians(90));
         drive.setPoseEstimate(start);
 
-        Scalar lower = new Scalar(150, 100, 100);
+        Scalar lower = new Scalar(110, 150, 70);
         Scalar upper = new Scalar(180, 255, 255);
 
-        double minArea = 7600; //area to detect obj
+        double minArea = 6000; //area to detect obj
 
         cam = new PropPipeline(
                 lower,
                 upper,
                 () -> minArea,
-                () -> 300, // left div. line
-                () -> 750 // right div. line
+                () -> 250, // left div. line
+                () -> 700 // right div. line
         );
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))
@@ -58,7 +58,7 @@ public class RCPL extends LinearOpMode {
                 .build();
 
         moveRight = drive.trajectorySequenceBuilder(start)
-                .strafeTo(new Vector2d(18, -59))
+                .strafeTo(new Vector2d(20.5, -59))
                 .build();
 
         waitForStart();
@@ -136,15 +136,14 @@ public class RCPL extends LinearOpMode {
                         }).forward(8).lineToLinearHeading(new Pose2d(36.1, -28.3, Math.toRadians(180)))
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.releaseFirstPixel();
-                        }).strafeLeft(8).turn(Math.toRadians(180))
-                        .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                        }).UNSTABLE_addTemporalMarkerOffset(0.5, () -> {
                             intake.angleServoUp();
-                        }).UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                        }).strafeLeft(8).UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.angleServoMiddle();
-                        }).lineToLinearHeading(new Pose2d(44.9, -36.5, Math.toRadians(0)))
+                        }).turn(Math.toRadians(180)).lineToLinearHeading(new Pose2d(44.9, -37.7, Math.toRadians(0)))
                         .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.releaseSecondPixel();
-                        }).back(3).UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                        }).back(4).UNSTABLE_addTemporalMarkerOffset(0, () -> {
                             intake.angleServoUp();
                         }).strafeTo(leftAlign).turn(Math.toRadians(180))
                         .lineToLinearHeading(new Pose2d(parkLeft, Math.toRadians(180))).build();

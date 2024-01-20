@@ -15,17 +15,17 @@ public class Intake {
     }
 
     public void angleServoDown() {
-        angleServo1.setPosition(-0.99);
+        angleServo1.setPosition(0);
         angleServo2.setPosition(1);
     }
 
     public void angleServoUp() {
-        angleServo1.setPosition(1.00);
-        angleServo2.setPosition(-0.99);
+        angleServo1.setPosition(0.73);
+        angleServo2.setPosition(0.27);
     }
     public void angleServoMiddle(){
-        angleServo1.setPosition(-0.52);
-        angleServo2.setPosition(0.51);
+        angleServo1.setPosition(0.3);
+        angleServo2.setPosition(0.7);
     }
     public void releaseFirstPixel() {
         rightServo.setPosition(servoOpen);

@@ -160,20 +160,19 @@ public class MainDriveTrain extends OpMode {
         }
 
         if (gamepad2.left_bumper) {
-            angleServo1.setPosition(-0.99);
+            angleServo1.setPosition(0);
             angleServo2.setPosition(1);
-            //servoAngle = 0.1;
         }
 
         if (gamepad2.right_bumper) {
-            angleServo1.setPosition(1.00);
-            angleServo2.setPosition(-0.99);
+            angleServo1.setPosition(0.73);
+            angleServo2.setPosition(0.27);
             //servoAngle =0.00;
         }
 
         if(gamepad2.x) {
-            angleServo1.setPosition(-0.44);
-            angleServo2.setPosition(0.43);
+            angleServo1.setPosition(0.3);
+            angleServo2.setPosition(0.7);
         }
 
         if (gamepad2.y && gamepad2.dpad_down && gamepad2.left_trigger == 1) {

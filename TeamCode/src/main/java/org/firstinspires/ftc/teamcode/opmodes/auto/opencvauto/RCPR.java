@@ -40,17 +40,17 @@ public class RCPR extends LinearOpMode {
         start = new Pose2d(14, -61, Math.toRadians(90));
         drive.setPoseEstimate(start);
 
-        Scalar lower = new Scalar(150, 100, 100);
+        Scalar lower = new Scalar(110, 150, 70);
         Scalar upper = new Scalar(180, 255, 255);
 
-        double minArea = 7600; //area to detect obj
+        double minArea = 6000; //area to detect obj
 
         cam = new PropPipeline(
                 lower,
                 upper,
                 () -> minArea,
-                () -> 300, // left div. line
-                () -> 750 // right div. line
+                () -> 250, // left div. line
+                () -> 700 // right div. line
         );
         visionPortal = new VisionPortal.Builder()
                 .setCamera(hardwareMap.get(WebcamName.class, "Webcam 1"))

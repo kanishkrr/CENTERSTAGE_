@@ -19,8 +19,7 @@ public class OpenCVPipelineTuner extends OpMode {
     public static int leftDividingLine = 250;
     public static int rightDividingLine = 650;
     public static double minArea = 9000;
-    public static int blueOrRed = 1;
-    /**
+    public static int lh, uh, ls, us, lv, uv = 0;    /**
      * User-defined init method
      * <p>
      * This method will be called once, when the INIT button is pressed.
@@ -38,13 +37,8 @@ public class OpenCVPipelineTuner extends OpMode {
         Scalar lower;
         Scalar upper;
 
-        if (blueOrRed == 1) { //blue
-            lower = new Scalar(150, 100, 100);
-            upper = new Scalar(180, 255, 255);
-        } else {
-            lower = new Scalar(150, 100, 100); // the lower hsv threshold for your detection
-            upper = new Scalar(180, 255, 255); // the upper hsv threshold for your detection
-        }
+        lower = new Scalar(lh, ls, lv);
+        upper = new Scalar(uh, us, uv);
 
         colourMassDetectionProcessor = new PropPipeline(
                 lower,

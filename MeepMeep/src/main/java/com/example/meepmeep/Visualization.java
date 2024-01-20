@@ -20,15 +20,8 @@ public class Visualization {
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(30, 30, Math.toRadians(150), Math.toRadians(150), 17.2)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(-38, -61, Math.toRadians(90)))
-                        .strafeTo(new Vector2d(-48.2, -39))
-                                .strafeRight(6)
-                                .splineToConstantHeading(new Vector2d(-33.3, -20), Math.toRadians(90))
-                                .lineToLinearHeading(new Pose2d(-31, -10, Math.toRadians(0)))
-                                .splineToConstantHeading(new Vector2d(35, -18), Math.toRadians(0))
-                        .lineToLinearHeading(new Pose2d(44.9, -30, Math.toRadians(0)))
-                        .strafeTo(leftAlign)
-                        .lineToLinearHeading(new Pose2d(parkLeft, Math.toRadians(180)))
+                        drive.trajectorySequenceBuilder(new Pose2d(14, 61, Math.toRadians(-90)))
+                                .lineToLinearHeading(new Pose2d(44.9, 35, Math.toRadians(0)))
                         .build()
 
 

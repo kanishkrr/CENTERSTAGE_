@@ -8,8 +8,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
 @Config
-@TeleOp(group = "LocalizationTest")
-public class LocalizationTest extends LinearOpMode {
+@TeleOp(group = "Localization")
+public class Localization extends LinearOpMode {
 
     public static double startX = 0;
     public static double startY = 0;
