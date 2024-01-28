@@ -9,26 +9,39 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class ServoTuner extends OpMode {
 
 
-    Servo angleServoOne, angleServoTwo;
-    public static double targetPos = 0;
-    double angleServoOneTargetPos = 0;
-    double angleServoTwoTargetPos = 0;
+    Servo rightServo, leftServo, angleServo;
+    public static double rightServoTarget = 0;
+    public static double leftServoTarget = 0;
+    public static double angleServoTarget = 0;
+    public static int symmetrical = 1;
 
 
     @Override
     public void init() {
-        angleServoOne = hardwareMap.get(Servo.class, "servo1");
-        angleServoTwo = hardwareMap.get(Servo.class, "servo5");
+        leftServo = hardwareMap.get(Servo.class, "servo1");
+        rightServo = hardwareMap.get(Servo.class, "servo3");
+        angleServo = hardwareMap.get(Servo.class, "servo2");
     }
 
     public void loop() {
         telemetry.addData("Status", "Run Time: " + getRuntime());
         telemetry.update();
 
-        angleServoOneTargetPos = targetPos;
+        double rsPos;
+        double lsPos;
+        double asPos;
 
-        angleServoOne.setPosition(angleServoOneTargetPos);
-        angleServoTwoTargetPos = 1-angleServoOneTargetPos;
-        angleServoTwo.setPosition(angleServoTwoTargetPos);
+        if (symmetrical == 1) {
+            lsPos = 1-rightServoTarget;
+        } else {
+            lsPos = leftServoTarget;
+        }
+
+        rsPos = rightServoTarget;
+        asPos = angleServoTarget;
+
+        rightServo.setPosition(rsPos);
+        leftServo.setPosition(lsPos);
+        angleServo.setPosition(asPos);
     }
 }
