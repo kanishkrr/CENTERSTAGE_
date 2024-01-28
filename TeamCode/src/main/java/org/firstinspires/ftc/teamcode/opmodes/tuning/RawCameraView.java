@@ -9,8 +9,6 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
-import org.firstinspires.ftc.teamcode.common.centerstage.Side;
-
 import java.util.List;
 
 @Autonomous
@@ -23,9 +21,6 @@ public class RawCameraView extends LinearOpMode {
     private TfodProcessor tfod;
     private VisionPortal visionPortal;
 
-    Side side;
-
-
     @Override
     public void runOpMode() {
 
@@ -35,29 +30,6 @@ public class RawCameraView extends LinearOpMode {
 
 
         waitForStart();
-
-        while (opModeIsActive()) {
-
-            List<Recognition> currentRecognitions = tfod.getRecognitions();
-            currentRecognitions = tfod.getRecognitions();
-
-            side = Side.RIGHT;
-
-            if (currentRecognitions.size() != 0) {
-                float x1 = currentRecognitions.get(0).getLeft();
-
-                side = Side.CENT;
-
-                if (x1 < 200) {
-                    side = Side.LEFT;
-                }
-
-
-            }
-
-            System.out.println(side);
-        }
-
 
     }
     private void initTfod() {
