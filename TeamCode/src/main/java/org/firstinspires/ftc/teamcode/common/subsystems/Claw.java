@@ -8,45 +8,49 @@ public class Claw {
     private static final double servoOpen = 0.3;
 
     public Claw(HardwareMap hMap) {
-        angleServo = hMap.get(Servo.class, "servo5");
-        rightServo = hMap.get(Servo.class, "servo2");
-        leftServo = hMap.get(Servo.class, "servo3");
+        angleServo = hMap.get(Servo.class, "as");
+        rightServo = hMap.get(Servo.class, "rs");
+        leftServo = hMap.get(Servo.class, "ls");
     }
 
-    public void openRightNarrow() {
-
-    }
+    public void openRightNarrow() { rightServo.setPosition(0.65); }
 
     public void openLeftNarrow() {
-
+        leftServo.setPosition(0.38);
     }
 
     public void openRightWide() {
-
+        rightServo.setPosition(0.65);
     }
 
     public void openLeftWide() {
-
+        leftServo.setPosition(0.35);
     }
 
-    public void alignWithBoard() {
+    public void alignWithBoard(int armPos) {
+        double newAsPos = 0.3;
 
+        if (armPos > 180 && armPos < 470) {
+            newAsPos = (-0.0006*(armPos) + 0.49);
+        }
+
+        angleServo.setPosition(newAsPos);
     }
 
     public void alignWithGround() {
-
+        angleServo.setPosition(0.16);
     }
 
     public void closeRight() {
-
+        rightServo.setPosition(0.58);
     }
 
     public void closeLeft() {
-
+        leftServo.setPosition(0.5);
     }
 
     public void resetPosition() {
-
+        angleServo.setPosition(0.5);
     }
 
     public void closeBoth() {

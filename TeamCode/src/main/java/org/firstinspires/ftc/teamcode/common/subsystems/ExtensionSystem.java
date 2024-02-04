@@ -11,35 +11,51 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 @Config
-@TeleOp
 public class ExtensionSystem {
     private PIDController armController, slideController;
 
     double f; //Figure out this value
-    public static int armTarget, slideTarget = 0;
+    public static double armTarget, slideTarget = 0;
     public final double ticks_in_degree = 537;
-    public final double armMaxHeight = 0; //to be figured out
-    private DcMotor arm, slide;
+    private DcMotor arm, slide, armEncoder;
     public  ExtensionSystem(HardwareMap hMap){
         //create pid controllers, one for arm and one for viper slide
-        armController = new PIDController(0, 0, 0); //input these values
-        slideController = new PIDController(0, 0, 0); //input these values
+        armController = new PIDController(0.01311, 0, 0.0012199); //input these values pArm = 0.0164, iArm = 0.03, dArm = 0.0018
+        slideController = new PIDController(0.0029, 0, 0.000165); //input these values pSlide = 0.00171, iSlide = 0, dSlide = 0.000165
 
+        //initialize all motors
         arm = hMap.get(DcMotorEx.class, "Arm_Motor");
-        slide = hMap.get(DcMotorEx.class, "Viper_Slide");
+        slide = hMap.get(DcMotorEx.class, "ViperSlide");
+        armEncoder = hMap.get(DcMotorEx.class, "Left_Front_Motor");
 
-        f = 0;
+        //set settings form motors + encoders
+        arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        armEncoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        f = 0.56;
     }
 
     public void update() {
+        //temp variable
+        double tempTarget = 0;
+
         //calculations for arm
-        int armPos = arm.getCurrentPosition();
-        double pid = armController.calculate(armPos, armTarget);
-        double ff = Math.cos(Math.toRadians(armTarget / ticks_in_degree)) * f;
+        int armPos = getArmCurrent();
+
+        if (armTarget - armPos > 50) {
+            tempTarget = armPos+50;
+        } else if (armTarget - armPos < -50) {
+            tempTarget = armPos-50;
+        } else {
+            tempTarget = armTarget;
+        }
+
+        double pid = armController.calculate(armPos, tempTarget);
+        double ff = Math.cos(Math.toRadians(tempTarget / ticks_in_degree)) * f;
         double armPower = pid * ff;
 
         //calculations for slide
-        int slidePos = slide.getCurrentPosition();
+        int slidePos = getSlideCurrent();
         double slidePower = slideController.calculate(slidePos, slideTarget);
 
         //setting power
@@ -47,27 +63,30 @@ public class ExtensionSystem {
         slide.setPower(slidePower);
     }
 
-    public void setTarget(int aTarget, int sTarget) {
+    public void setArmTarget(double aTarget) {
 
         //sets the target position for the arm and slide
         armTarget = aTarget;
+    }
+
+    public int getArmCurrent() {
+        return Math.abs(armEncoder.getCurrentPosition());
+    }
+
+    public void setSlideTarget(double sTarget) {
         slideTarget = sTarget;
     }
 
-    public void setToPixelPickup() {
-
+    public int getSlideCurrent() {
+        return arm.getCurrentPosition();
     }
 
-    public void setToResetPosition() {
-
+    public double getArmTarget() {
+        return armTarget;
     }
 
-    public void setToBackBoard() {
-
-    }
-
-    public void changeArmHeight(double change) {
-        armTarget += (int)(change * 20);
+    public double getSlideTarget() {
+        return slideTarget;
     }
 
 }

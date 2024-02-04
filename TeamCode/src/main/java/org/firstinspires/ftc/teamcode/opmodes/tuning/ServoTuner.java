@@ -18,9 +18,9 @@ public class ServoTuner extends OpMode {
 
     @Override
     public void init() {
-        leftServo = hardwareMap.get(Servo.class, "servo1");
-        rightServo = hardwareMap.get(Servo.class, "servo3");
-        angleServo = hardwareMap.get(Servo.class, "servo2");
+        leftServo = hardwareMap.get(Servo.class, "ls");
+        rightServo = hardwareMap.get(Servo.class, "rs");
+        angleServo = hardwareMap.get(Servo.class, "as");
     }
 
     public void loop() {
