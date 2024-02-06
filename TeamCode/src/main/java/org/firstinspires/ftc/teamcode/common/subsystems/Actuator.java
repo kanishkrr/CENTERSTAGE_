@@ -8,6 +8,8 @@ public class Actuator {
     DcMotor actuator;
     public Actuator(HardwareMap hardwareMap) {
         actuator = hardwareMap.dcMotor.get("Actuator_Motor");
+
+        actuator.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public void setPower(double power) {

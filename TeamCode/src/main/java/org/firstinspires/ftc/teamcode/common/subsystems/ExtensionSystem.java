@@ -18,9 +18,11 @@ public class ExtensionSystem {
     public static double armTarget, slideTarget = 0;
     public final double ticks_in_degree = 537;
     private DcMotor arm, slide, armEncoder;
+
+    public double powerToArm = 0;
     public  ExtensionSystem(HardwareMap hMap){
         //create pid controllers, one for arm and one for viper slide
-        armController = new PIDController(0.01311, 0, 0.0012199); //input these values pArm = 0.0164, iArm = 0.03, dArm = 0.0018
+        armController = new PIDController(0.0149, 0, 0.0013); //input these values pArm = 0.0164, iArm = 0.03, dArm = 0.0018
         slideController = new PIDController(0.0029, 0, 0.000165); //input these values pSlide = 0.00171, iSlide = 0, dSlide = 0.000165
 
         //initialize all motors
@@ -31,32 +33,30 @@ public class ExtensionSystem {
         //set settings form motors + encoders
         arm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         armEncoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        f = 0.56;
+        f = 0.7;
     }
 
     public void update() {
-        //temp variable
-        double tempTarget = 0;
-
         //calculations for arm
-        int armPos = getArmCurrent();
+        int armPos = armEncoder.getCurrentPosition();
 
-        if (armTarget - armPos > 50) {
-            tempTarget = armPos+50;
-        } else if (armTarget - armPos < -50) {
-            tempTarget = armPos-50;
-        } else {
-            tempTarget = armTarget;
-        }
-
-        double pid = armController.calculate(armPos, tempTarget);
-        double ff = Math.cos(Math.toRadians(tempTarget / ticks_in_degree)) * f;
+        double pid = armController.calculate(armPos, armTarget);
+        double ff = Math.cos(Math.toRadians(armTarget / ticks_in_degree)) * f;
         double armPower = pid * ff;
 
         //calculations for slide
         int slidePos = getSlideCurrent();
         double slidePower = slideController.calculate(slidePos, slideTarget);
+
+        if (armPower > 0.5) {
+            armPower = 0.5;
+        } else if (armPower < -0.5) {
+            armPower = -0.5;
+        }
+
+        powerToArm = armPower;
 
         //setting power
         arm.setPower(armPower);
@@ -70,7 +70,7 @@ public class ExtensionSystem {
     }
 
     public int getArmCurrent() {
-        return Math.abs(armEncoder.getCurrentPosition());
+        return armEncoder.getCurrentPosition();
     }
 
     public void setSlideTarget(double sTarget) {
@@ -88,5 +88,11 @@ public class ExtensionSystem {
     public double getSlideTarget() {
         return slideTarget;
     }
+
+    public double getCurrentArmPower() {
+        return powerToArm;
+    }
+
+
 
 }

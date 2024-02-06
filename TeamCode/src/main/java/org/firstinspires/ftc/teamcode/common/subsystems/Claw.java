@@ -7,6 +7,12 @@ public class Claw {
     Servo angleServo, rightServo, leftServo;
     private static final double servoOpen = 0.3;
 
+    public enum Mode {
+        FLAT, SCORING, REST;
+    }
+
+    Mode current = Mode.REST;
+
     public Claw(HardwareMap hMap) {
         angleServo = hMap.get(Servo.class, "as");
         rightServo = hMap.get(Servo.class, "rs");
@@ -66,6 +72,20 @@ public class Claw {
     public void openBothWide() {
         openLeftWide();
         openRightWide();
+    }
+
+    public void updateState(Mode mode) {
+        current = mode;
+    }
+
+    public void update(double armPos) {
+        if (current == Mode.FLAT) {
+            alignWithGround();
+        } else if (current == Mode.SCORING) {
+            alignWithBoard((int) armPos);
+        } else {
+            resetPosition();
+        }
     }
 
 

@@ -6,25 +6,30 @@ import org.firstinspires.ftc.teamcode.common.subsystems.ExtensionSystem;
 
 public class CommandBase {
 
-    ExtensionSystem extensionSys;
+    ExtensionSystem extension;
     Claw claw;
     Actuator actuator;
 
     public CommandBase(ExtensionSystem extensionSystem, Claw claw, Actuator actuator) {
-        this.extensionSys = extensionSystem;
+        this.extension = extensionSystem;
         this.claw = claw;
         this.actuator = actuator;
     }
 
+    //resets everything at the start
+    public void periodic() {
+
+    }
+
     public void pickUpPixelCommand() {
-        extensionSys.setArmTarget(30);
-        extensionSys.setSlideTarget(400);
+        extension.setArmTarget(30);
+        extension.setSlideTarget(400);
         claw.openBothWide();
     }
 
     public void autoExtendCommand() {
-        extensionSys.setArmTarget(100);
-        extensionSys.setSlideTarget(600);
+        extension.setArmTarget(100);
+        extension.setSlideTarget(600);
     }
 
     public void hangCommand() {
@@ -34,4 +39,14 @@ public class CommandBase {
     public void hangRelease() {
 
     }
+
+    public void leftJoystickCommand(double leftStickY) {
+
+    }
+
+    public void rightJoystickCommand(double rightStickY) {
+
+    }
+
+
 }

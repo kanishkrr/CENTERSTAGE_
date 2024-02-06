@@ -8,7 +8,7 @@ public class DroneRelease {
     Servo servo;
 
     public DroneRelease(HardwareMap hMap) {
-        servo = hMap.get(Servo.class, "servo4");
+        servo = hMap.get(Servo.class, "servo5");
     }
 
     public void init() {

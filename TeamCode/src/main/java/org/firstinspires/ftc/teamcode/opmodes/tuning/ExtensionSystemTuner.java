@@ -16,12 +16,7 @@ import org.firstinspires.ftc.teamcode.common.subsystems.Claw;
 @TeleOp
 public class ExtensionSystemTuner extends OpMode {
     private PIDController armController, slideController;
-    public static double pArm = 0.0129, iArm = 0, dArm = 0.0013; //Tune these values
-
-    /*
-    armController = new PIDController(0.0164, 0.03, 0.00112); //input these values pArm = 0.0164, iArm = 0.03, dArm = 0.0018
-        slideController = new PIDController(0.00171, 0, 0.000165);
-     */
+    public static double pArm = 0.0149, iArm = 0, dArm = 0.0013; //Tune these values
     public static double pSlide = 0.0029, iSlide = 0, dSlide = 0.000165; //Tune these values
 
     public static double asPos = 0.3;
@@ -65,12 +60,17 @@ public class ExtensionSystemTuner extends OpMode {
         int slidePos = arm.getCurrentPosition();
         double slidePower = slideController.calculate(slidePos, slideTarget);
 
+
+
+        if (armPower > 0.5) {
+            armPower = 0.5;
+        } else if (armPower < -0.5) {
+            armPower = -0.5;
+        }
+
         //setting power
         arm.setPower(armPower);
         slide.setPower(slidePower);
-
-        //200 --> 0.37
-        //450 --> 0.22
 
         double newAsPos;
 
