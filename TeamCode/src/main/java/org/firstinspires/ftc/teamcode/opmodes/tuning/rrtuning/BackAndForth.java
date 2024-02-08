@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.common.subsystems.ExtensionMechanism;
 
 /*
  * Op mode for preliminary tuning of the follower PID coefficients (located in the drive base
@@ -26,7 +27,6 @@ import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
  * is recommended that you use the FollowerPIDTuner opmode for further fine tuning.
  */
 
-@Disabled
 @Config
 @Autonomous(group = "drive")
 public class BackAndForth extends LinearOpMode {

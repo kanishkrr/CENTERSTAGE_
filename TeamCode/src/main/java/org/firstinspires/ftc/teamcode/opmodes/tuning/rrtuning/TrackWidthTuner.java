@@ -13,6 +13,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.internal.system.Misc;
 import org.firstinspires.ftc.teamcode.common.rr.drive.DriveConstants;
 import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.common.subsystems.ExtensionMechanism;
 
 /*
  * This routine determines the effective track width. The procedure works by executing a point turn
@@ -36,6 +37,11 @@ public class TrackWidthTuner extends LinearOpMode {
         Telemetry telemetry = new MultipleTelemetry(this.telemetry, FtcDashboard.getInstance().getTelemetry());
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+
+        ExtensionMechanism ext = new ExtensionMechanism(hardwareMap);
+        ext.updateState(ExtensionMechanism.Mode.HOLD);
+        ext.update();
+
         // TODO: if you haven't already, set the localizer to something that doesn't depend on
         // drive encoders for computing the heading
 
@@ -66,6 +72,7 @@ public class TrackWidthTuner extends LinearOpMode {
                 headingAccumulator += Angle.normDelta(heading - lastHeading);
                 lastHeading = heading;
 
+                ext.update();
                 drive.update();
             }
 

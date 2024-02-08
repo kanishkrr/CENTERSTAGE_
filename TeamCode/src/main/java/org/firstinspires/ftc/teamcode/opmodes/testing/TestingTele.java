@@ -12,8 +12,6 @@ import org.firstinspires.ftc.teamcode.common.subsystems.Actuator;
 import org.firstinspires.ftc.teamcode.common.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.common.subsystems.DroneRelease;
 import org.firstinspires.ftc.teamcode.common.subsystems.ExtensionMechanism;
-import org.firstinspires.ftc.teamcode.common.subsystems.ExtensionMechanism;
-import org.firstinspires.ftc.teamcode.common.subsystems.ExtensionSystem;
 
 @TeleOp
 public class TestingTele extends LinearOpMode {
@@ -27,6 +25,7 @@ public class TestingTele extends LinearOpMode {
 
     //initialize time
     ElapsedTime runtime = new ElapsedTime();
+    double driveMultiplier = 0.75;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -36,18 +35,17 @@ public class TestingTele extends LinearOpMode {
         extension = new ExtensionMechanism(hardwareMap);
         claw = new Claw(hardwareMap);
         actuator = new Actuator(hardwareMap);
-
-        /*
-        drone = new DroneRelease(hardwareMap); //still need to create functions for this class
-
-         */
+        drone = new DroneRelease(hardwareMap);
 
         //sets drive mode + localizes
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         drive.setPoseEstimate(PoseStorage.currentPose);
 
+        //init drone
+        drone.init();
+
         //initialize arm start pos
-        extension.setArmTarget(140);
+        extension.updateState(ExtensionMechanism.Mode.HOLD);
 
         waitForStart();
         if (isStopRequested()) return;
@@ -55,49 +53,46 @@ public class TestingTele extends LinearOpMode {
         runtime.reset();
 
         while (opModeIsActive() && !isStopRequested()) {
+            drive.update();
             extension.update();
             claw.update(extension.getArmCurrent());
 
             //gamepad2 functions
             if (gamepad2.x) {
-                extension.setSlideTarget(-780);
-                extension.setArmTarget(95);
-                claw.updateState(Claw.Mode.FLAT);
+                extension.updateState(ExtensionMechanism.Mode.FLAT);
+                claw.changeAngleState(Claw.Mode.FLAT);
+                claw.setClawState(Claw.Mode.WIDE, Claw.Mode.BOTH);
             }
 
             if (gamepad2.y) {
-                if (extension.getSlideCurrent() > -300) {
-                    extension.setArmTarget(140);
-                }
-                if (extension.getArmCurrent() < 150) {
-                    extension.setSlideTarget(0);
-                }
-                claw.updateState(Claw.Mode.REST);
+                claw.setClawState(Claw.Mode.CLOSE, Claw.Mode.BOTH);
+                extension.updateState(ExtensionMechanism.Mode.HOLD);
+                claw.changeAngleState(Claw.Mode.REST);
             }
 
-            if (gamepad2.b) {
-                extension.setSlideTarget(0);
-            }
-
-            /*
-
-            if mode is flat
-            don't extend slide until arm is in right position
-
-            if mode is reset
-            dont reset arm until slide is reset
-
-            if mode is custom
-            dont extend slide until arm is in right position
-
-             */
             if (gamepad2.a) {
-                extension.setSlideTarget(-1200);
-                extension.setArmTarget(330);
-                claw.updateState(Claw.Mode.SCORING);
+                extension.updateState(ExtensionMechanism.Mode.SCORING);
+                claw.changeAngleState(Claw.Mode.SCORING);
+            }
+
+            if (gamepad2.right_bumper) {
+                claw.setClawState(Claw.Mode.SHARP, Claw.Mode.RIGHT);
+            }
+
+            if (gamepad2.left_bumper) {
+                claw.setClawState(Claw.Mode.SHARP, Claw.Mode.LEFT);
+            }
+
+            if (gamepad2.right_trigger > 0.5) {
+                claw.setClawState(Claw.Mode.CLOSE, Claw.Mode.RIGHT);
+            }
+
+            if (gamepad2.left_trigger > 0.5) {
+                claw.setClawState(Claw.Mode.CLOSE, Claw.Mode.LEFT);
             }
 
             if (gamepad2.left_stick_y > 0.15 || gamepad2.left_stick_y < -0.15 ) {
+                extension.updateState(ExtensionMechanism.Mode.CUSTOM);
 
                 double y = -gamepad2.left_stick_y;
 
@@ -117,6 +112,8 @@ public class TestingTele extends LinearOpMode {
             }
 
             if (gamepad2.right_stick_y > 0.15 || gamepad2.right_stick_y < -0.15) {
+                extension.updateState(ExtensionMechanism.Mode.CUSTOM);
+
                 double y = gamepad2.right_stick_y;
 
                 double target = extension.getSlideTarget() + y*35;
@@ -138,6 +135,21 @@ public class TestingTele extends LinearOpMode {
                 actuator.setPower(0);
             }
 
+            if (gamepad1.left_trigger > 0 && gamepad1.right_trigger > 0) {
+                drone.release();
+            }
+
+            drive.setWeightedDrivePower(new Pose2d(-gamepad1.left_stick_y*driveMultiplier, -gamepad1.left_stick_x*driveMultiplier, -gamepad1.right_stick_x*driveMultiplier));
+
+            if (gamepad1.dpad_up) {
+                driveMultiplier = 1.0;
+            } else if (gamepad1.dpad_right) {
+                driveMultiplier = 0.75;
+            } else if (gamepad1.dpad_down) {
+                driveMultiplier = 0.5;
+            } else if (gamepad1.dpad_left) {
+                driveMultiplier = 0.25;
+            }
 
             telemetry.addData("slide current:", extension.getSlideCurrent());
             telemetry.addData("arm real current:", extension.armEncoder.getCurrentPosition());

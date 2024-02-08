@@ -100,7 +100,6 @@ public class DividingLineTuner implements VisionProcessor, CameraStreamSource {
     @Override
     public Object processFrame(Mat frame, long captureTimeNanos) {
 
-
         Imgproc.cvtColor(frame, frame, Imgproc.COLOR_RGB2HSV);
 
         if (upper.val[0] < lower.val[0]) {

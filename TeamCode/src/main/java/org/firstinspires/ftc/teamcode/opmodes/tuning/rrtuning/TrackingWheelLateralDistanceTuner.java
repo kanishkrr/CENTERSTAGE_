@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.teamcode.common.rr.drive.StandardTrackingWheelLocalizer;
 import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.common.subsystems.ExtensionMechanism;
 
 /**
  * Opmode designed to assist the user in tuning the `StandardTrackingWheelLocalizer`'s
@@ -62,7 +63,6 @@ import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
  * slightly but your heading will still be fine. This does not affect your overall tracking
  * precision. The heading should still line up.
  */
-@Disabled
 @Config
 @TeleOp(group = "drive")
 public class TrackingWheelLateralDistanceTuner extends LinearOpMode {
@@ -71,6 +71,10 @@ public class TrackingWheelLateralDistanceTuner extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+
+        ExtensionMechanism ext = new ExtensionMechanism(hardwareMap);
+
+        ext.updateState(ExtensionMechanism.Mode.HOLD);
 
         if (!(drive.getLocalizer() instanceof StandardTrackingWheelLocalizer)) {
             RobotLog.setGlobalErrorMsg("StandardTrackingWheelLocalizer is not being set in the "
@@ -98,6 +102,8 @@ public class TrackingWheelLateralDistanceTuner extends LinearOpMode {
         boolean tuningFinished = false;
 
         while (!isStopRequested() && !tuningFinished) {
+            ext.update();
+
             Pose2d vel = new Pose2d(0, 0, -gamepad1.right_stick_x);
             drive.setDrivePower(vel);
 

@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.common.subsystems.ExtensionMechanism;
 
 /*
  * This is a simple routine to test translational drive capabilities.
@@ -25,6 +26,10 @@ public class StraightTest extends LinearOpMode {
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
+        ExtensionMechanism ext = new ExtensionMechanism(hardwareMap);
+
+        ext.updateState(ExtensionMechanism.Mode.HOLD);
+
         Trajectory trajectory = drive.trajectoryBuilder(new Pose2d())
                 .forward(DISTANCE)
                 .build();
@@ -33,7 +38,12 @@ public class StraightTest extends LinearOpMode {
 
         if (isStopRequested()) return;
 
-        drive.followTrajectory(trajectory);
+        drive.followTrajectoryAsync(trajectory);
+
+        while(opModeIsActive() && !isStopRequested()) {
+            drive.update();
+            ext.update();
+        }
 
         Pose2d poseEstimate = drive.getPoseEstimate();
         telemetry.addData("finalX", poseEstimate.getX());

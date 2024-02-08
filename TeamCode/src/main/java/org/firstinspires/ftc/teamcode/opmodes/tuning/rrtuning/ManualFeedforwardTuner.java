@@ -23,6 +23,7 @@ import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.common.subsystems.ExtensionMechanism;
 
 import java.util.Objects;
 
@@ -50,6 +51,8 @@ public class ManualFeedforwardTuner extends LinearOpMode {
 
     private SampleMecanumDrive drive;
 
+    ExtensionMechanism ext;
+
     enum Mode {
         DRIVER_MODE,
         TUNING_MODE
@@ -74,6 +77,10 @@ public class ManualFeedforwardTuner extends LinearOpMode {
 
         drive = new SampleMecanumDrive(hardwareMap);
 
+        ext = new ExtensionMechanism(hardwareMap);
+
+        ext.updateState(ExtensionMechanism.Mode.HOLD);
+
         final VoltageSensor voltageSensor = hardwareMap.voltageSensor.iterator().next();
 
         mode = Mode.TUNING_MODE;
@@ -95,6 +102,8 @@ public class ManualFeedforwardTuner extends LinearOpMode {
 
         while (!isStopRequested()) {
             telemetry.addData("mode", mode);
+
+            ext.update();
 
             switch (mode) {
                 case TUNING_MODE:
