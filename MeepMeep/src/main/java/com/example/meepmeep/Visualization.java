@@ -18,13 +18,26 @@ public class Visualization {
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
-                .setConstraints(30, 30, Math.toRadians(150), Math.toRadians(150), 17.2)
+                .setConstraints(45, 45, Math.toRadians(178), Math.toRadians(178), 19.2)
                 .followTrajectorySequence(drive ->
-                        drive.trajectorySequenceBuilder(new Pose2d(14, 61, Math.toRadians(-90)))
-                                .lineToLinearHeading(new Pose2d(44.9, 35, Math.toRadians(0)))
-                        .build()
+                        drive.trajectorySequenceBuilder(new Pose2d(14.00, 61.00, Math.toRadians(-90.00)))
+                                .splineTo(new Vector2d(23.21, 55.39), Math.toRadians(0.00))
+                                .splineToConstantHeading(new Vector2d(41.00, 34.80), Math.toRadians(0.00))
+                                .waitSeconds(1)
+                                .lineToLinearHeading(new Pose2d(42.78, 31.96, Math.toRadians(180.00)))
+                                .waitSeconds(1)
+                                .splineToConstantHeading(new Vector2d(32.85, 12.60), Math.toRadians(180.00))
+                                .splineToConstantHeading(new Vector2d(-37.00, 12.60), Math.toRadians(180.00))
+                                .waitSeconds(1)
+                                .splineToConstantHeading(new Vector2d(30.33, 12.90), Math.toRadians(180.00))
+                                .lineToLinearHeading(new Pose2d(39.08, 28.84, Math.toRadians(0.00)))
+                                .build()
 
 
+                        /*
+                        .lineToLinearHeading(new Pose2d(47.6, 54.3, Math.toRadians(-180)))
+                                .lineToLinearHeading(new Pose2d(58.7, 58.7, Math.toRadians(-180)))
+                         */
                 );
 
 

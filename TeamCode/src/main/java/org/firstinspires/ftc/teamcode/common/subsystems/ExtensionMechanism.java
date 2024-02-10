@@ -38,6 +38,8 @@ public class ExtensionMechanism {
         slide = hardwareMap.get(DcMotorEx.class, "ViperSlide");
         armEncoder = hardwareMap.get(DcMotorEx.class, "Left_Front_Motor");
 
+        armEncoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
     }
 
 
@@ -92,6 +94,8 @@ public class ExtensionMechanism {
                  */
                 if (getArmCurrent() < (getArmTarget()-60) && getArmCurrent() < 550) {
                     maxPower = 0.9; //to be tuned
+                } else {
+                    maxPower = 0.5;
                 }
                 break;
         }

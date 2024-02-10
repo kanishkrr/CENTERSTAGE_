@@ -15,12 +15,10 @@ import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.common.subsystems.Actuator;
 import org.firstinspires.ftc.teamcode.common.subsystems.Claw;
 import org.firstinspires.ftc.teamcode.common.subsystems.DroneRelease;
-import org.firstinspires.ftc.teamcode.common.subsystems.ExtensionSystem;
 
 @TeleOp(name = "TeleOpBlue")
 public class TeleOpBlue extends LinearOpMode {
 
-    ExtensionSystem extension;
     Claw claw;
     Actuator actuator;
     DroneRelease drone;
@@ -36,7 +34,6 @@ public class TeleOpBlue extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         //initialize all subsystems
         drive = new SampleMecanumDrive(hardwareMap);
-        extension = new ExtensionSystem(hardwareMap);
         claw = new Claw(hardwareMap);
         actuator = new Actuator(hardwareMap);
         drone = new DroneRelease(hardwareMap);

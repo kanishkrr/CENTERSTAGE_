@@ -25,7 +25,7 @@ public class TestingTele extends LinearOpMode {
 
     //initialize time
     ElapsedTime runtime = new ElapsedTime();
-    double driveMultiplier = 0.75;
+    double driveMultiplier = 0.5;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -141,15 +141,22 @@ public class TestingTele extends LinearOpMode {
 
             drive.setWeightedDrivePower(new Pose2d(-gamepad1.left_stick_y*driveMultiplier, -gamepad1.left_stick_x*driveMultiplier, -gamepad1.right_stick_x*driveMultiplier));
 
-            if (gamepad1.dpad_up) {
-                driveMultiplier = 1.0;
-            } else if (gamepad1.dpad_right) {
-                driveMultiplier = 0.75;
-            } else if (gamepad1.dpad_down) {
-                driveMultiplier = 0.5;
-            } else if (gamepad1.dpad_left) {
+            driveMultiplier = 0.4;
+
+            double leftTrig = gamepad1.left_trigger;
+            double rightTrig = gamepad1.right_trigger;
+
+            if (rightTrig > 0.1 && leftTrig > 0.1) {
+
+                double avg = (leftTrig+rightTrig) / 2;
+
+                driveMultiplier = (avg*0.6) + 0.4;
+            }
+
+            if (gamepad1.right_bumper && gamepad1.left_bumper) {
                 driveMultiplier = 0.25;
             }
+
 
             telemetry.addData("slide current:", extension.getSlideCurrent());
             telemetry.addData("arm real current:", extension.armEncoder.getCurrentPosition());
@@ -157,6 +164,9 @@ public class TestingTele extends LinearOpMode {
             telemetry.addData("arm current:", extension.getArmCurrent());
             telemetry.addData("gamepad right stick y", gamepad2.right_stick_y);
             telemetry.addData("gamepad left stick y", gamepad2.left_stick_y);
+            telemetry.addData("robot x:", drive.getPoseEstimate().getX());
+            telemetry.addData("robot y:", drive.getPoseEstimate().getY());
+            telemetry.addData("robot heading:", drive.getPoseEstimate().getHeading());
             telemetry.update();
 
         }
