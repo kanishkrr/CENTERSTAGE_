@@ -47,6 +47,10 @@ public class TestingTele extends LinearOpMode {
         //initialize arm start pos
         extension.updateState(ExtensionMechanism.Mode.HOLD);
 
+        while (opModeInInit()) {
+            extension.update();
+        }
+
         waitForStart();
         if (isStopRequested()) return;
 

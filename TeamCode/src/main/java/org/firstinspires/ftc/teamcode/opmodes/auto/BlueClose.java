@@ -33,9 +33,10 @@ public class BlueClose extends LinearOpMode {
 
         claw.changeAngleState(Claw.Mode.REST);
         claw.setClawState(Claw.Mode.CLOSE, Claw.Mode.BOTH);
-        extension.updateState(ExtensionMechanism.Mode.CUSTOM);
-
         claw.update(extension.getArmCurrent());
+
+        extension.updateState(ExtensionMechanism.Mode.CUSTOM);
+        extension.setArmTarget(120);
 
         left = drive.trajectorySequenceBuilder(start)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
@@ -43,39 +44,38 @@ public class BlueClose extends LinearOpMode {
                     claw.changeAngleState(Claw.Mode.SCORING);
                 }).UNSTABLE_addTemporalMarkerOffset(0.9, () -> {
                     extension.setSlideTarget(-1000);
-                }).lineToLinearHeading(new Pose2d(41, 34.8, Math.toRadians(0)))
+                }).lineToLinearHeading(new Pose2d(41, 38, Math.toRadians(0)))
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    claw.setClawState(Claw.Mode.SHARP, Claw.Mode.LEFT);
-                }).waitSeconds(1).UNSTABLE_addTemporalMarkerOffset(0.2, () -> {
-                    extension.updateState(ExtensionMechanism.Mode.HOLD);
-                    claw.changeAngleState(Claw.Mode.REST);
-                }).waitSeconds(1).turn(Math.toRadians(-135)).UNSTABLE_addTemporalMarkerOffset(2, () -> {
-                    extension.updateState(ExtensionMechanism.Mode.FLAT);
-                    claw.changeAngleState(Claw.Mode.FLAT);
-                }).UNSTABLE_addTemporalMarkerOffset(4, () -> {
-                    claw.setClawState(Claw.Mode.WIDE, Claw.Mode.RIGHT);
-                }).UNSTABLE_addTemporalMarkerOffset(5, () -> {
-                    extension.updateState(ExtensionMechanism.Mode.HOLD);
-                    claw.changeAngleState(Claw.Mode.REST);
-                }).build();
+                    claw.setClawState(Claw.Mode.SHARP, Claw.Mode.RIGHT);
+                }).UNSTABLE_addTemporalMarkerOffset(0.3, () -> {
+                    extension.setSlideTarget(0);
+                }).UNSTABLE_addTemporalMarkerOffset(0.7, () -> {
+                    extension.setArmTarget(800);
+                }).UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                    extension.setArmTarget(1180);
+                    claw.changeAngleState(Claw.Mode.STRAIGHT);
+                }).UNSTABLE_addTemporalMarkerOffset(1.85, () -> {
+                    extension.setArmTarget(1370);
+                }).waitSeconds(0.3).splineToConstantHeading(new Vector2d(43, 16), Math.toRadians(0)).waitSeconds(0.1)
+                .UNSTABLE_addTemporalMarkerOffset(0.2, () -> {
+                    claw.setClawState(Claw.Mode.WIDE, Claw.Mode.LEFT);
+                }).forward(1).build();
 
+
+        while (opModeInInit()) {
+            extension.update();
+        }
 
         waitForStart();
         if (isStopRequested()) return;
 
         drive.followTrajectorySequenceAsync(left);
 
-        while (opModeInInit()) {
-            extension.update();
-        }
 
         while (!isStopRequested() && opModeIsActive()) {
             drive.update();
             extension.update();
             claw.update(extension.getArmCurrent());
-
-            telemetry.addData("poseHeading", drive.getPoseEstimate().getHeading());
-            telemetry.update();
         }
 
         PoseStorage.currentPose = drive.getPoseEstimate();

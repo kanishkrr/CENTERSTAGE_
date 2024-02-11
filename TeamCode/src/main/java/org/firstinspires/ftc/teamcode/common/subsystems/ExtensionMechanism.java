@@ -39,6 +39,7 @@ public class ExtensionMechanism {
         armEncoder = hardwareMap.get(DcMotorEx.class, "Left_Front_Motor");
 
         armEncoder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        armEncoder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
     }
 

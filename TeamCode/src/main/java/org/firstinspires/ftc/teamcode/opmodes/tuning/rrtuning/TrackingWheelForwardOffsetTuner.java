@@ -15,6 +15,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.internal.system.Misc;
 import org.firstinspires.ftc.teamcode.common.rr.drive.StandardTrackingWheelLocalizer;
 import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.common.subsystems.ExtensionMechanism;
 
 /**
  * This routine determines the effective forward offset for the lateral tracking wheel.
@@ -35,7 +36,6 @@ import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
  * for the forward offset. You can run this procedure as many times as necessary until a
  * satisfactory result is produced.
  */
-@Disabled
 @Config
 @Autonomous(group="drive")
 public class TrackingWheelForwardOffsetTuner extends LinearOpMode {
@@ -49,6 +49,10 @@ public class TrackingWheelForwardOffsetTuner extends LinearOpMode {
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
+        ExtensionMechanism ext = new ExtensionMechanism(hardwareMap);
+
+        ext.updateState(ExtensionMechanism.Mode.HOLD);
+
         if (!(drive.getLocalizer() instanceof StandardTrackingWheelLocalizer)) {
             RobotLog.setGlobalErrorMsg("StandardTrackingWheelLocalizer is not being set in the "
                     + "drive class. Ensure that \"setLocalizer(new StandardTrackingWheelLocalizer"
@@ -58,6 +62,10 @@ public class TrackingWheelForwardOffsetTuner extends LinearOpMode {
         telemetry.addLine("Press play to begin the forward offset tuner");
         telemetry.addLine("Make sure your robot has enough clearance to turn smoothly");
         telemetry.update();
+
+        while (opModeInInit()) {
+            ext.update();
+        }
 
         waitForStart();
 
@@ -100,6 +108,7 @@ public class TrackingWheelForwardOffsetTuner extends LinearOpMode {
         telemetry.update();
 
         while (!isStopRequested()) {
+            ext.update();
             idle();
         }
     }

@@ -11,7 +11,7 @@ public class Claw {
     all the different states that the servo can be in
      */
     public enum Mode {
-        FLAT, SCORING, REST, LEFT, RIGHT, BOTH, WIDE, SHARP, CLOSE;
+        FLAT, SCORING, REST, LEFT, RIGHT, BOTH, WIDE, SHARP, CLOSE, STRAIGHT;
     }
 
     Mode current = Mode.REST;
@@ -59,6 +59,10 @@ public class Claw {
 
     public void alignWithGround() {
         angleServo.setPosition(0.135);
+    }
+
+    public void alignWithGroundAuto() {
+        angleServo.setPosition(0.14);
     }
 
     public void closeRight() {
@@ -112,6 +116,8 @@ public class Claw {
             alignWithGround();
         } else if (current == Mode.SCORING) {
             alignWithBoard((int) armPos);
+        } else if (current == Mode.STRAIGHT) {
+            alignWithGroundAuto();
         } else {
             resetPosition();
         }
