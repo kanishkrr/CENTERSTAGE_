@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmodes.testing;
+package org.firstinspires.ftc.teamcode.opmodes.tuning;
 
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -9,7 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
 @Config
 @TeleOp(group = "Localization")
-public class Localization extends LinearOpMode {
+public class LocalizationTuner extends LinearOpMode {
 
     public static double startX = 0;
     public static double startY = 0;

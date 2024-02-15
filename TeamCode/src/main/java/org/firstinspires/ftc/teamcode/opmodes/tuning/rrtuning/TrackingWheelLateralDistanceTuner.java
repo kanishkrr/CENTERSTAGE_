@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.RobotLog;
 
 import org.firstinspires.ftc.teamcode.common.rr.drive.StandardTrackingWheelLocalizer;
 import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.common.subsystems.ExtensionMechanism;
+import org.firstinspires.ftc.teamcode.common.hardware.ExtensionMechanism;
 
 /**
  * Opmode designed to assist the user in tuning the `StandardTrackingWheelLocalizer`'s
@@ -63,6 +63,7 @@ import org.firstinspires.ftc.teamcode.common.subsystems.ExtensionMechanism;
  * slightly but your heading will still be fine. This does not affect your overall tracking
  * precision. The heading should still line up.
  */
+@Disabled
 @Config
 @TeleOp(group = "drive")
 public class TrackingWheelLateralDistanceTuner extends LinearOpMode {

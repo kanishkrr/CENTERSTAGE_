@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.common.subsystems.ExtensionMechanism;
+import org.firstinspires.ftc.teamcode.common.hardware.ExtensionMechanism;
 
 import java.util.Objects;
 
@@ -23,6 +23,8 @@ import java.util.Objects;
  * <p>
  * Further fine tuning of MAX_ANG_VEL may be desired.
  */
+
+@Disabled
 @Config
 @Autonomous(group = "drive")
 public class MaxAngularVeloTuner extends LinearOpMode {

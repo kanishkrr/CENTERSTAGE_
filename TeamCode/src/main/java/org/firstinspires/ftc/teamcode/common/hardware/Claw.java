@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.common.subsystems;
+package org.firstinspires.ftc.teamcode.common.hardware;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -11,7 +11,7 @@ public class Claw {
     all the different states that the servo can be in
      */
     public enum Mode {
-        FLAT, SCORING, REST, LEFT, RIGHT, BOTH, WIDE, SHARP, CLOSE, STRAIGHT;
+        FLAT, SCORING, REST, LEFT, RIGHT, BOTH, WIDE, SHARP, CLOSE, STRAIGHT, LINED;
     }
 
     Mode current = Mode.REST;
@@ -62,15 +62,17 @@ public class Claw {
     }
 
     public void alignWithGroundAuto() {
-        angleServo.setPosition(0.14);
+        angleServo.setPosition(0.2);
     }
 
+    public void alignWithGroundLined() {angleServo.setPosition(0.14);}
+
     public void closeRight() {
-        rightServo.setPosition(0.3);
+        rightServo.setPosition(0.27);
     }
 
     public void closeLeft() {
-        leftServo.setPosition(0.7);
+        leftServo.setPosition(0.73);
     }
 
     public void resetPosition() {
@@ -118,6 +120,8 @@ public class Claw {
             alignWithBoard((int) armPos);
         } else if (current == Mode.STRAIGHT) {
             alignWithGroundAuto();
+        } else if (current == Mode.LINED) {
+            alignWithGroundLined();
         } else {
             resetPosition();
         }

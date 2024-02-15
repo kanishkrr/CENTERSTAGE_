@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.common.subsystems.ExtensionMechanism;
+import org.firstinspires.ftc.teamcode.common.hardware.ExtensionMechanism;
 
 /**
  * This is a simple teleop routine for testing localization. Drive the robot around like a normal
@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.common.subsystems.ExtensionMechanism;
  * exercise is to ascertain whether the localizer has been configured properly (note: the pure
  * encoder localizer heading may be significantly off if the track width has not been tuned).
  */
+@Disabled
 @Autonomous(group = "drive")
 public class LocalizationTest extends LinearOpMode {
     @Override

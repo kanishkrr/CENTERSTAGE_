@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.opmodes.testing;
+package org.firstinspires.ftc.teamcode.opmodes.teleop;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -8,13 +8,13 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.common.centerstage.PoseStorage;
 import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.common.subsystems.Actuator;
-import org.firstinspires.ftc.teamcode.common.subsystems.Claw;
-import org.firstinspires.ftc.teamcode.common.subsystems.DroneRelease;
-import org.firstinspires.ftc.teamcode.common.subsystems.ExtensionMechanism;
+import org.firstinspires.ftc.teamcode.common.hardware.Actuator;
+import org.firstinspires.ftc.teamcode.common.hardware.Claw;
+import org.firstinspires.ftc.teamcode.common.hardware.DroneRelease;
+import org.firstinspires.ftc.teamcode.common.hardware.ExtensionMechanism;
 
 @TeleOp
-public class TestingTele extends LinearOpMode {
+public class Duo extends LinearOpMode {
 
     //creating all subsystems
     ExtensionMechanism extension;
@@ -59,7 +59,7 @@ public class TestingTele extends LinearOpMode {
         while (opModeIsActive() && !isStopRequested()) {
             drive.update();
             extension.update();
-            claw.update(extension.getArmCurrent());
+            claw.update(extension.armCurrent);
 
             //gamepad2 functions
             if (gamepad2.x) {
@@ -79,19 +79,21 @@ public class TestingTele extends LinearOpMode {
                 claw.changeAngleState(Claw.Mode.SCORING);
             }
 
-            if (gamepad2.right_bumper) {
+            if (gamepad2.right_bumper && gamepad2.left_bumper) {
                 claw.setClawState(Claw.Mode.SHARP, Claw.Mode.RIGHT);
-            }
-
-            if (gamepad2.left_bumper) {
+                claw.setClawState(Claw.Mode.SHARP, Claw.Mode.LEFT);
+            } else if (gamepad2.right_bumper) {
+                claw.setClawState(Claw.Mode.SHARP, Claw.Mode.RIGHT);
+            } else if (gamepad2.left_bumper) {
                 claw.setClawState(Claw.Mode.SHARP, Claw.Mode.LEFT);
             }
 
-            if (gamepad2.right_trigger > 0.5) {
+            if (gamepad2.right_trigger > 0.3 && gamepad2.left_trigger > 0.3) {
                 claw.setClawState(Claw.Mode.CLOSE, Claw.Mode.RIGHT);
-            }
-
-            if (gamepad2.left_trigger > 0.5) {
+                claw.setClawState(Claw.Mode.CLOSE, Claw.Mode.LEFT);
+            } else if (gamepad2.right_trigger > 0.3) {
+                claw.setClawState(Claw.Mode.CLOSE, Claw.Mode.RIGHT);
+            } else if (gamepad2.left_trigger > 0.3) {
                 claw.setClawState(Claw.Mode.CLOSE, Claw.Mode.LEFT);
             }
 

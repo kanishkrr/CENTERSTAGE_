@@ -10,8 +10,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.common.subsystems.Claw;
-
 @Config
 @TeleOp
 public class ExtensionSystemTuner extends OpMode {

@@ -15,7 +15,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.internal.system.Misc;
 import org.firstinspires.ftc.teamcode.common.rr.drive.StandardTrackingWheelLocalizer;
 import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.common.subsystems.ExtensionMechanism;
+import org.firstinspires.ftc.teamcode.common.hardware.ExtensionMechanism;
 
 /**
  * This routine determines the effective forward offset for the lateral tracking wheel.
@@ -36,6 +36,8 @@ import org.firstinspires.ftc.teamcode.common.subsystems.ExtensionMechanism;
  * for the forward offset. You can run this procedure as many times as necessary until a
  * satisfactory result is produced.
  */
+
+@Disabled
 @Config
 @Autonomous(group="drive")
 public class TrackingWheelForwardOffsetTuner extends LinearOpMode {
