@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.robot.Robot;
 
 import org.firstinspires.ftc.teamcode.common.centerstage.Globals;
 import org.firstinspires.ftc.teamcode.common.centerstage.PoseStorage;
+import org.firstinspires.ftc.teamcode.common.centerstage.ScoringPositions;
 import org.firstinspires.ftc.teamcode.common.hardware.Claw;
 import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
 import org.firstinspires.ftc.teamcode.common.rr.trajectorysequence.TrajectorySequence;
@@ -26,12 +27,13 @@ public class BlueCloseCycle extends LinearOpMode {
     @Override
     public void runOpMode() {
 
+
+
         List<LynxModule> allHubs = hardwareMap.getAll(LynxModule.class);
 
         for (LynxModule hub : allHubs) {
             hub.setBulkCachingMode(LynxModule.BulkCachingMode.AUTO);
         }
-
 
 
 
@@ -49,7 +51,7 @@ public class BlueCloseCycle extends LinearOpMode {
                     robot.yellowPixelArmCommand();
                 }).UNSTABLE_addTemporalMarkerOffset(1.4, () -> {
                     robot.yellowPixelExtendCommand();
-                }).lineToLinearHeading(new Pose2d(40.2, 39, Math.toRadians(0)))
+                }).lineToLinearHeading(ScoringPositions.YELLOW_PIXEL_POSITIONS[0])
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.claw.setClawState(Claw.Mode.SHARP, Claw.Mode.RIGHT);
                 }).UNSTABLE_addTemporalMarkerOffset(0.4, () -> {
@@ -72,7 +74,7 @@ public class BlueCloseCycle extends LinearOpMode {
                     robot.yellowPixelArmCommand();
                 }).UNSTABLE_addTemporalMarkerOffset(1.4, () -> {
                     robot.yellowPixelExtendCommand();
-                }).lineToLinearHeading(new Pose2d(40.2, 33, Math.toRadians(0)))
+                }).lineToLinearHeading(ScoringPositions.YELLOW_PIXEL_POSITIONS[1])
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.claw.setClawState(Claw.Mode.SHARP, Claw.Mode.RIGHT);
                 }).UNSTABLE_addTemporalMarkerOffset(0.4, () -> {
@@ -86,24 +88,6 @@ public class BlueCloseCycle extends LinearOpMode {
                 .UNSTABLE_addTemporalMarkerOffset(0.3, () -> {
                     robot.limitArm(0.55);
                     robot.claw.setClawState(Claw.Mode.SHARP, Claw.Mode.LEFT);
-                }).waitSeconds(0.5).UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.claw.changeAngleState(Claw.Mode.LINED);
-                }).setReversed(true).splineToConstantHeading(new Vector2d(30, 5), Math.toRadians(0))
-                .setReversed(true).splineToConstantHeading(new Vector2d(14, 5), Math.toRadians(0))
-                .UNSTABLE_addTemporalMarkerOffset(1, () -> {
-                    robot.cycleExtendCommand();
-                    robot.claw.setClawState(Claw.Mode.WIDE, Claw.Mode.RIGHT);
-                }).splineToConstantHeading(new Vector2d(-24, 4), Math.toRadians(0))
-                .setReversed(true).splineToConstantHeading(new Vector2d(-36, 3.6), Math.toRadians(0))
-                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.claw.setClawState(Claw.Mode.CLOSE, Claw.Mode.RIGHT);
-                }).splineToConstantHeading(new Vector2d(30, 5), Math.toRadians(0)).UNSTABLE_addTemporalMarkerOffset(0, () -> {
-                    robot.slideRetractCommand();
-                }).UNSTABLE_addTemporalMarkerOffset(0.7, () -> {
-                    robot.limitArm(0.6);
-                    robot.yellowPixelArmCommand();
-                }).UNSTABLE_addTemporalMarkerOffset(1.7, () -> {
-                    robot.yellowPixelExtendCommand();
                 }).build();
 
         TrajectorySequence right = robot.drive.trajectorySequenceBuilder(robot.drive.getPoseEstimate())
@@ -111,7 +95,7 @@ public class BlueCloseCycle extends LinearOpMode {
                     robot.yellowPixelArmCommand();
                 }).UNSTABLE_addTemporalMarkerOffset(1.4, () -> {
                     robot.yellowPixelExtendCommand();
-                }).lineToLinearHeading(new Pose2d(40.7, 27, Math.toRadians(0)))
+                }).lineToLinearHeading(ScoringPositions.YELLOW_PIXEL_POSITIONS[2])
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.claw.setClawState(Claw.Mode.SHARP, Claw.Mode.RIGHT);
                 }).UNSTABLE_addTemporalMarkerOffset(0.4, () -> {
