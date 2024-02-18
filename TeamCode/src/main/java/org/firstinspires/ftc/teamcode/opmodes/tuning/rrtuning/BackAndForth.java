@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.common.hardware.ExtensionMechanism;
 import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
 
 /*
@@ -25,7 +26,6 @@ import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
  * This opmode is designed as a convenient, coarse tuning for the follower PID coefficients. It
  * is recommended that you use the FollowerPIDTuner opmode for further fine tuning.
  */
-@Disabled
 @Config
 @Autonomous(group = "drive")
 public class BackAndForth extends LinearOpMode {
@@ -36,6 +36,10 @@ public class BackAndForth extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
+        ExtensionMechanism ext = new ExtensionMechanism(hardwareMap);
+
+        ext.updateState(ExtensionMechanism.Mode.HOLD);
+
         Trajectory trajectoryForward = drive.trajectoryBuilder(new Pose2d())
                 .forward(DISTANCE)
                 .build();
@@ -44,9 +48,14 @@ public class BackAndForth extends LinearOpMode {
                 .back(DISTANCE)
                 .build();
 
+        while (opModeInInit()) {
+            ext.update();
+        }
+
         waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
+            ext.update();
             drive.followTrajectory(trajectoryForward);
             drive.followTrajectory(trajectoryBackward);
         }

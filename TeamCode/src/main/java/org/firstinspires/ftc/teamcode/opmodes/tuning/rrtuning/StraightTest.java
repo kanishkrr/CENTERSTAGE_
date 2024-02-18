@@ -16,7 +16,6 @@ import org.firstinspires.ftc.teamcode.common.hardware.ExtensionMechanism;
 /*
  * This is a simple routine to test translational drive capabilities.
  */
-@Disabled
 @Config
 @Autonomous(group = "drive")
 public class StraightTest extends LinearOpMode {
@@ -35,6 +34,10 @@ public class StraightTest extends LinearOpMode {
         Trajectory trajectory = drive.trajectoryBuilder(new Pose2d())
                 .forward(DISTANCE)
                 .build();
+
+        while (opModeInInit()) {
+            ext.update();
+        }
 
         waitForStart();
 

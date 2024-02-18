@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Claw {
     Servo angleServo, rightServo, leftServo;
-    private static final double servoOpen = 0.3;
 
     /*
     all the different states that the servo can be in
@@ -30,18 +29,18 @@ public class Claw {
     /*
     all the basic servo commands
      */
-    public void openRightNarrow() { rightServo.setPosition(0.37); }
+    public void openRightNarrow() { rightServo.setPosition(0.5); }
 
     public void openLeftNarrow() {
-        leftServo.setPosition(0.63);
+        leftServo.setPosition(0.5);
     }
 
     public void openRightWide() {
-        rightServo.setPosition(0.7);
+        rightServo.setPosition(0.72);
     }
 
     public void openLeftWide() {
-        leftServo.setPosition(0.3);
+        leftServo.setPosition(0.28);
     }
 
     /*
@@ -51,32 +50,32 @@ public class Claw {
         double newAsPos = 0.3;
 
         if (armPos > 170 && armPos < 530) {
-            newAsPos = (-0.0006*(armPos) + 0.49);
+            newAsPos = (-0.0006*(armPos) + 0.49) + 0.02;
         }
 
         angleServo.setPosition(newAsPos);
     }
 
     public void alignWithGround() {
-        angleServo.setPosition(0.135);
+        angleServo.setPosition(0.175);
     }
 
     public void alignWithGroundAuto() {
-        angleServo.setPosition(0.2);
+        angleServo.setPosition(0.17);
     }
 
-    public void alignWithGroundLined() {angleServo.setPosition(0.14);}
+    public void alignWithGroundLined() {angleServo.setPosition(0.18);}
 
     public void closeRight() {
-        rightServo.setPosition(0.27);
+        rightServo.setPosition(0.42);
     }
 
     public void closeLeft() {
-        leftServo.setPosition(0.73);
+        leftServo.setPosition(0.58);
     }
 
     public void resetPosition() {
-        angleServo.setPosition(0.5);
+        angleServo.setPosition(0.54);
     }
 
     public void closeBoth() {

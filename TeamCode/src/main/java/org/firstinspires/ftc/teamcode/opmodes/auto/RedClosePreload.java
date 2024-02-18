@@ -63,7 +63,7 @@ public class RedClosePreload extends LinearOpMode {
                     robot.claw.setClawState(Claw.Mode.SHARP, Claw.Mode.LEFT);
                 }).waitSeconds(0.7).UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.resetCommand();
-                }).lineToLinearHeading(new Pose2d(48, -59.5, Math.toRadians(181))).back(6).build();
+                }).lineToLinearHeading(new Pose2d(48, -57.5, Math.toRadians(181))).back(6).build();
 
         TrajectorySequence center = robot.drive.trajectorySequenceBuilder(robot.drive.getPoseEstimate())
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
@@ -86,7 +86,7 @@ public class RedClosePreload extends LinearOpMode {
                     robot.claw.setClawState(Claw.Mode.SHARP, Claw.Mode.LEFT);
                 }).waitSeconds(0.7).UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.resetCommand();
-                }).lineToLinearHeading(new Pose2d(48, -59.5, Math.toRadians(181))).back(6).build();
+                }).lineToLinearHeading(new Pose2d(48, -57.5, Math.toRadians(181))).back(6).build();
 
         TrajectorySequence left = robot.drive.trajectorySequenceBuilder(robot.drive.getPoseEstimate())
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
@@ -109,7 +109,7 @@ public class RedClosePreload extends LinearOpMode {
                     robot.claw.setClawState(Claw.Mode.SHARP, Claw.Mode.LEFT);
                 }).waitSeconds(0.7).UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.resetCommand();
-                }).lineToLinearHeading(new Pose2d(48, -59.5, Math.toRadians(181))).back(6).build();
+                }).lineToLinearHeading(new Pose2d(48, -57.5, Math.toRadians(181))).back(6).build();
 
 
 
@@ -121,7 +121,7 @@ public class RedClosePreload extends LinearOpMode {
         waitForStart();
         if (isStopRequested()) return;
 
-        robot.drive.followTrajectorySequenceAsync(right);
+        robot.drive.followTrajectorySequenceAsync(left);
 
         while (!isStopRequested() && opModeIsActive()) {
             robot.update();

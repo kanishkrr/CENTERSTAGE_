@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.common.hardware.ExtensionMechanism;
 import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
 
 /*
@@ -17,6 +18,14 @@ public class TurnTest extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+
+        ExtensionMechanism ext = new ExtensionMechanism(hardwareMap);
+
+        ext.updateState(ExtensionMechanism.Mode.HOLD);
+
+        while (opModeInInit()) {
+            ext.update();
+        }
 
         waitForStart();
 

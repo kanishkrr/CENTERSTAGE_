@@ -66,7 +66,7 @@ public class RobotHardware {
     }
 
     public void yellowPixelArmCommand() {
-        extension.setArmTarget(245);
+        extension.setArmTarget(220);
         claw.changeAngleState(Claw.Mode.SCORING);
     }
 
@@ -80,7 +80,7 @@ public class RobotHardware {
 
     public void purplePixelArmCommand() {
         extension.setArmTarget(1350);
-        claw.changeAngleState(Claw.Mode.STRAIGHT);
+        claw.changeAngleState(Claw.Mode.LINED);
     }
 
     public void cycleExtendCommand() {
@@ -88,11 +88,15 @@ public class RobotHardware {
     }
 
     public void whitePixelArmCommand() {
-        extension.setArmTarget(330);
+        extension.setArmTarget(290);
         claw.changeAngleState(Claw.Mode.SCORING);
     }
 
     public void whitePixelExtendCommand() {
+        extension.setSlideTarget(-1300);
+    }
+
+    public void whitePixelRetractCommand() {
         extension.setSlideTarget(-1200);
     }
 

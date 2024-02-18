@@ -25,7 +25,6 @@ import org.firstinspires.ftc.teamcode.common.hardware.ExtensionMechanism;
  * this procedure a few times and averages the values for additional accuracy. Note: a relatively
  * accurate track width estimate is important or else the angular constraints will be thrown off.
  */
-@Disabled
 @Config
 @Autonomous(group = "drive")
 public class TrackWidthTuner extends LinearOpMode {
@@ -41,8 +40,10 @@ public class TrackWidthTuner extends LinearOpMode {
 
         ExtensionMechanism ext = new ExtensionMechanism(hardwareMap);
         ext.updateState(ExtensionMechanism.Mode.HOLD);
-        ext.update();
 
+        while (opModeInInit()) {
+            ext.update();
+        }
         // TODO: if you haven't already, set the localizer to something that doesn't depend on
         // drive encoders for computing the heading
 

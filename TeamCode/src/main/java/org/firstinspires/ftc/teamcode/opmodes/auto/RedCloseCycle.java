@@ -12,7 +12,10 @@ import org.firstinspires.ftc.teamcode.common.centerstage.PoseStorage;
 import org.firstinspires.ftc.teamcode.common.centerstage.ScoringPositions;
 import org.firstinspires.ftc.teamcode.common.hardware.Claw;
 import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
+import org.firstinspires.ftc.teamcode.common.rr.drive.DriveConstants;
+import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.common.rr.trajectorysequence.TrajectorySequence;
+import org.firstinspires.ftc.teamcode.opmodes.testing.Pose;
 
 import java.util.List;
 
@@ -57,7 +60,7 @@ public class RedCloseCycle extends LinearOpMode {
                     robot.purplePixelArmCommand();
                 }).UNSTABLE_addTemporalMarkerOffset(1.4, () -> {
                     robot.limitArm(0.35);
-                }).waitSeconds(1.5).lineToLinearHeading(new Pose2d(43.4, -37.5, Math.toRadians(0)))
+                }).waitSeconds(1.5).lineToLinearHeading(new Pose2d(42.4, -37.5, Math.toRadians(0)))
                 .UNSTABLE_addTemporalMarkerOffset(0.3, () -> {
                     robot.limitArm(0.55);
                     robot.claw.setClawState(Claw.Mode.SHARP, Claw.Mode.LEFT);
@@ -66,13 +69,32 @@ public class RedCloseCycle extends LinearOpMode {
                 }).waitSeconds(0.7).UNSTABLE_addTemporalMarkerOffset(0, () -> {
                     robot.claw.changeAngleState(Claw.Mode.LINED);
                 }).strafeLeft(12).setReversed(true).splineToConstantHeading(new Vector2d(30, -6), Math.toRadians(0))
-                .UNSTABLE_addTemporalMarkerOffset(0.3, () -> {
-                    robot.purplePixelArmCommand();
-                }).setReversed(true).splineToConstantHeading(new Vector2d(-24, -6), Math.toRadians(0)).forward(1)
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    robot.extension.setArmTarget(1360);
+                    robot.claw.changeAngleState(Claw.Mode.STRAIGHT);
+                }).setReversed(true).splineToConstantHeading(new Vector2d(-24, -6), Math.toRadians(0))
+                .setReversed(true).splineToConstantHeading(new Vector2d(-38, -8.5), Math.toRadians(0), SampleMecanumDrive.getVelocityConstraint(30, DriveConstants.MAX_ANG_VEL, DriveConstants.TRACK_WIDTH), SampleMecanumDrive.getAccelerationConstraint(30))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    robot.extension.setArmTarget(1470);
                     robot.whitePixelExtendCommand();
-                    robot.claw.setClawState(Claw.Mode.WIDE, Claw.Mode.LEFT);
-                }).build();
+                    robot.claw.changeAngleState(Claw.Mode.STRAIGHT);
+                    robot.claw.setClawState(Claw.Mode.WIDE, Claw.Mode.BOTH);
+                }).UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                    robot.claw.setClawState(Claw.Mode.CLOSE, Claw.Mode.BOTH);
+                }).UNSTABLE_addTemporalMarkerOffset(1.5, () -> {
+                    robot.slideRetractCommand();
+                    robot.extension.setArmTarget(1360);
+                }).waitSeconds(2.6).splineToConstantHeading(new Vector2d(30, -4), Math.toRadians(0))
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    robot.whitePixelArmCommand();
+                }).UNSTABLE_addTemporalMarkerOffset(2, () -> {
+                    robot.whitePixelExtendCommand();
+                }).lineToLinearHeading(new Pose2d(42.8, -36, Math.toRadians(0))).waitSeconds(0.5)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {
+                    robot.claw.setClawState(Claw.Mode.WIDE, Claw.Mode.BOTH);
+                }).UNSTABLE_addTemporalMarkerOffset(1, () -> {
+                    robot.whitePixelRetractCommand();
+                }).waitSeconds(2).back(3).build();
 
         TrajectorySequence center = robot.drive.trajectorySequenceBuilder(robot.drive.getPoseEstimate())
                 .UNSTABLE_addTemporalMarkerOffset(0, () -> {
