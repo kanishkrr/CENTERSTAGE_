@@ -3,18 +3,8 @@ package org.firstinspires.ftc.teamcode.opmodes.teleop;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.robot.Robot;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.common.centerstage.Globals;
-import org.firstinspires.ftc.teamcode.common.centerstage.PoseStorage;
-import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
-import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.common.hardware.Actuator;
-import org.firstinspires.ftc.teamcode.common.hardware.Claw;
-import org.firstinspires.ftc.teamcode.common.hardware.DroneRelease;
-import org.firstinspires.ftc.teamcode.common.hardware.ExtensionMechanism;
+import org.firstinspires.ftc.teamcode.common.hardware.Globals;
 import org.firstinspires.ftc.teamcode.opmodes.testing.RobotHardwareTest;
 
 @TeleOp

@@ -1,4 +1,4 @@
 package org.firstinspires.ftc.teamcode.opmodes.auto;
 
-public class RedClosePreload {
+public class BlueFarCycle {
 }

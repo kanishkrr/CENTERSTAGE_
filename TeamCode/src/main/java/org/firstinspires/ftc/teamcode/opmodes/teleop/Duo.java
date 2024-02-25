@@ -6,12 +6,10 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.common.centerstage.PoseStorage;
-import org.firstinspires.ftc.teamcode.common.rr.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.common.hardware.Actuator;
-import org.firstinspires.ftc.teamcode.common.hardware.Claw;
-import org.firstinspires.ftc.teamcode.common.hardware.DroneRelease;
-import org.firstinspires.ftc.teamcode.common.hardware.ExtensionMechanism;
+import org.firstinspires.ftc.teamcode.archive.PoseStorage;
+import org.firstinspires.ftc.teamcode.archive.rr.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.common.subsystems.DroneSubsystem;
+import org.firstinspires.ftc.teamcode.common.subsystems.HangSubsystem;
 
 @TeleOp
 public class Duo extends LinearOpMode {
@@ -19,8 +17,8 @@ public class Duo extends LinearOpMode {
     //creating all subsystems
     ExtensionMechanism extension;
     Claw claw;
-    Actuator actuator;
-    DroneRelease drone;
+    HangSubsystem actuator;
+    DroneSubsystem drone;
     SampleMecanumDrive drive;
 
     //initialize time
@@ -34,8 +32,8 @@ public class Duo extends LinearOpMode {
         drive = new SampleMecanumDrive(hardwareMap);
         extension = new ExtensionMechanism(hardwareMap);
         claw = new Claw(hardwareMap);
-        actuator = new Actuator(hardwareMap);
-        drone = new DroneRelease(hardwareMap);
+        actuator = new HangSubsystem(hardwareMap);
+        drone = new DroneSubsystem(hardwareMap);
 
         //sets drive mode + localizes
         drive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
