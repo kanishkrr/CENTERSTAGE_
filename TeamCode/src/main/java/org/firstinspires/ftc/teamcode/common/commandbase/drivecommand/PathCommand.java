@@ -6,6 +6,7 @@ import com.arcrobotics.ftclib.controller.PIDFController;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.teamcode.common.drive.Constants;
 import org.firstinspires.ftc.teamcode.common.drive.Drivetrain;
 import org.firstinspires.ftc.teamcode.common.drive.geometry.Pose;
 import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
@@ -44,8 +45,8 @@ public class PathCommand extends CommandBase {
 
 
 
-    private final double  MAX_TRANSLATIONAL_POWER = 0.7;
-    private final double  MAX_ROTATIONAL_POWER = 0.5;
+    private final double  MAX_TRANSLATIONAL_POWER = Constants.MAX_LINEAR_SPEED;
+    private final double  MAX_ROTATIONAL_POWER = Constants.MAX_ROTATIONAL_SPEED;
     private final double K_STATIC = 1.85;
 
     public PathCommand(Pose intermediatePose, Pose targetPose) {
