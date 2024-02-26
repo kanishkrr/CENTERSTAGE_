@@ -8,11 +8,11 @@ import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.ClawCo
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.ExtensionCommand;
 import org.firstinspires.ftc.teamcode.common.subsystems.IntakeSubsystem;
 
-public class WhitePixelRetractCommand extends SequentialCommandGroup {
+public class WhiteBackRetractCommand extends SequentialCommandGroup {
 
-    public WhitePixelRetractCommand() {
+    public WhiteBackRetractCommand() {
         super(
-                new WaitCommand(500),
+                new WaitCommand(200),
                 new ClawCommand(IntakeSubsystem.Mode.CLOSE, IntakeSubsystem.Mode.BOTH),
                 new WaitCommand(700),
                 new ExtensionCommand(0),

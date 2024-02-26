@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.common.hardware;
 
+import org.firstinspires.ftc.teamcode.common.centerstage.Location;
+
 public class Globals {
 
     public static boolean IS_AUTO = false;
 
-    public static boolean IS_BLUE = false;
+    public static Location ALLIANCE = Location.BLUE;
 
-    public static boolean IS_CLOSE = false;
+    public static Location SIDE = Location.CLOSE;
 }

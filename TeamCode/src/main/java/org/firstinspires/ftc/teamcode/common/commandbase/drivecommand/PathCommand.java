@@ -53,7 +53,7 @@ public class PathCommand extends CommandBase {
         this.drivetrain = robot.drivetrain;
         this.intermediatePose = intermediatePose;
         this.targetPose = targetPose;
-        this.distance = (intermediatePose.subtract(drivetrain.localizer.getPose()).toVec2D().magnitude())*0.15;
+        this.distance = (intermediatePose.subtract(drivetrain.localizer.getPose()).toVec2D().magnitude())*0.25;
 
         xController.reset();
         yController.reset();

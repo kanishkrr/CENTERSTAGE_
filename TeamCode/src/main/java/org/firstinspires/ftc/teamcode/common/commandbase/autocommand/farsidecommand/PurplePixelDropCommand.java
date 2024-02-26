@@ -12,8 +12,7 @@ public class PurplePixelDropCommand extends SequentialCommandGroup {
 
     public PurplePixelDropCommand() {
         super(
-                new ArmCommand(120),
-                new WaitCommand(300),
+                new ArmCommand(150),
                 new ExtensionCommand(-1700),
                 new PivotCommand(IntakeSubsystem.Mode.FLAT),
                 new WaitCommand(600)

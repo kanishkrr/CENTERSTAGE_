@@ -9,16 +9,17 @@ import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.Extens
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.PivotCommand;
 import org.firstinspires.ftc.teamcode.common.subsystems.IntakeSubsystem;
 
-public class WhitePixelExtendCommand extends SequentialCommandGroup {
+public class WhiteFrontRetractCommand extends SequentialCommandGroup {
 
-    public WhitePixelExtendCommand() {
+    public WhiteFrontRetractCommand() {
         super(
-                new ArmCommand(1420),
                 new WaitCommand(300),
-                new ExtensionCommand(-1000),
-                new PivotCommand(IntakeSubsystem.Mode.STRAIGHT),
-                new ClawCommand(IntakeSubsystem.Mode.WIDE, IntakeSubsystem.Mode.BOTH),
-                new WaitCommand(1000)
+                new ClawCommand(IntakeSubsystem.Mode.CLOSE, IntakeSubsystem.Mode.BOTH),
+                new WaitCommand(500),
+                new PivotCommand(IntakeSubsystem.Mode.REST),
+                new ExtensionCommand(0),
+                new ArmCommand(200), //used to have the pivot command after this
+                new WaitCommand(300) //used to wait for 700 ms
         );
     }
 }

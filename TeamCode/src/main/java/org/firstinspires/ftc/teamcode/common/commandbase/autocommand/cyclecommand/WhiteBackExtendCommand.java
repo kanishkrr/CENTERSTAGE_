@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.common.commandbase.autocommand.farsidecommand;
+package org.firstinspires.ftc.teamcode.common.commandbase.autocommand.cyclecommand;
 
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
@@ -9,14 +9,15 @@ import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.Extens
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.PivotCommand;
 import org.firstinspires.ftc.teamcode.common.subsystems.IntakeSubsystem;
 
-public class PurpleDropRetractCommand extends SequentialCommandGroup {
+public class WhiteBackExtendCommand extends SequentialCommandGroup {
 
-    public PurpleDropRetractCommand() {
+    public WhiteBackExtendCommand() {
         super(
-                new ExtensionCommand(0),
-                new ArmCommand(190),
-                new PivotCommand(IntakeSubsystem.Mode.REST),
-                new ClawCommand(IntakeSubsystem.Mode.CLOSE, IntakeSubsystem.Mode.BOTH),
+                new ArmCommand(1420),
+                new WaitCommand(300),
+                new ExtensionCommand(-1000),
+                new PivotCommand(IntakeSubsystem.Mode.STRAIGHT),
+                new ClawCommand(IntakeSubsystem.Mode.WIDE, IntakeSubsystem.Mode.BOTH),
                 new WaitCommand(1000)
         );
     }

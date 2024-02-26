@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.common.commandbase.autocommand.generalcommand;
+package org.firstinspires.ftc.teamcode.common.commandbase.autocommand.closesidecommand;
 
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;

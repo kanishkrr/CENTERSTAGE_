@@ -46,7 +46,6 @@ public class RobotHardware {
             this.drone = new DroneSubsystem(hardwareMap);
 
 
-
         }
 
         voltage = hardwareMap.voltageSensor.iterator().next().getVoltage();

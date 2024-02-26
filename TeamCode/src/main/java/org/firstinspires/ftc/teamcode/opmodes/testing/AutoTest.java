@@ -11,10 +11,10 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.closesidecommand.PurplePixelExtendCommand;
-import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.cyclecommand.WhitePixelExtendCommand;
-import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.cyclecommand.WhitePixelRetractCommand;
-import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.generalcommand.YellowPixelExtendCommand;
-import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.generalcommand.YellowPixelRetractCommand;
+import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.cyclecommand.WhiteBackExtendCommand;
+import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.cyclecommand.WhiteBackRetractCommand;
+import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.closesidecommand.YellowPixelExtendCommand;
+import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.closesidecommand.YellowPixelRetractCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.drivecommand.PositionCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.ArmCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.ClawCommand;
@@ -86,8 +86,8 @@ public class AutoTest extends LinearOpMode {
                     new PositionCommand(new Pose(7,2.5,Math.toRadians(-90))),
                     new PositionCommand(new Pose(-55,0.5,Math.toRadians(-90))),
                     new PositionCommand(new Pose(-57,20,Math.toRadians(-90))),
-                    new WhitePixelExtendCommand(),
-                    new WhitePixelRetractCommand(),
+                    new WhiteBackExtendCommand(),
+                    new WhiteBackRetractCommand(),
                     new PositionCommand(new Pose(-55,-1,Math.toRadians(-90))),
                     new PositionCommand(new Pose(-55,-1,Math.toRadians(-90)))
             )

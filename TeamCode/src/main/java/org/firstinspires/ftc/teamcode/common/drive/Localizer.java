@@ -9,7 +9,6 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.common.drive.geometry.Pose;
-import org.firstinspires.ftc.teamcode.archive.rr.util.Encoder;
 
 import java.util.Arrays;
 import java.util.List;

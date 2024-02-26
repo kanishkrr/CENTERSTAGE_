@@ -9,15 +9,17 @@ import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.Extens
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.PivotCommand;
 import org.firstinspires.ftc.teamcode.common.subsystems.IntakeSubsystem;
 
-public class YellowPixelRetractCommand extends SequentialCommandGroup {
+public class YellowPixelFarCommand extends SequentialCommandGroup {
 
-    public YellowPixelRetractCommand() {
+    public YellowPixelFarCommand() {
         super(
-                new ExtensionCommand(0),
-                new WaitCommand(600),
-                new ArmCommand(120),
-                new ClawCommand(IntakeSubsystem.Mode.CLOSE, IntakeSubsystem.Mode.BOTH),
-                new PivotCommand(IntakeSubsystem.Mode.REST)
+                new PivotCommand(IntakeSubsystem.Mode.SCORING),
+                new ArmCommand(220),
+                new WaitCommand(300),
+                new ExtensionCommand(-1200),
+                new WaitCommand(800),
+                new ClawCommand(IntakeSubsystem.Mode.SHARP, IntakeSubsystem.Mode.LEFT),
+                new WaitCommand(300)
         );
     }
 }
