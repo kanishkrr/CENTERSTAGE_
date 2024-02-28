@@ -48,6 +48,9 @@ public class ExtensionSubsystem extends SubsystemBase {
         armCurrent = Math.abs(armEncoder.getCurrentPosition());
         slideCurrent = arm.getCurrentPosition();
 
+        armTarget = Range.clip(armTarget, 0, 1440);
+        slideTarget = Range.clip(slideTarget, -2000, 50);
+
         double pid = armController.calculate(armCurrent, armTarget);
         double ff = Math.cos(Math.toRadians(armTarget / ticks_in_degree)) * f;
         double armPower = pid * ff;

@@ -9,4 +9,8 @@ public class Globals {
     public static Location ALLIANCE = Location.BLUE;
 
     public static Location SIDE = Location.CLOSE;
+
+    public static Location PATH = Location.SIDE;
+
+    public static Location PARK = Location.LEFT;
 }

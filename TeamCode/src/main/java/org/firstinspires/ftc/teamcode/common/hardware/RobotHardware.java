@@ -42,9 +42,13 @@ public class RobotHardware {
 
         if (Globals.IS_AUTO) {
 
+            startCamera();
+
+
+        } else {
+
             this.hang = new HangSubsystem(hardwareMap);
             this.drone = new DroneSubsystem(hardwareMap);
-
 
         }
 

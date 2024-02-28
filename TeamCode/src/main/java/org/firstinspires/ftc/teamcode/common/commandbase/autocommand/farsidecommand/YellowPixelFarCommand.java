@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.common.commandbase.autocommand.generalcommand;
+package org.firstinspires.ftc.teamcode.common.commandbase.autocommand.farsidecommand;
 
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
@@ -14,9 +14,9 @@ public class YellowPixelFarCommand extends SequentialCommandGroup {
     public YellowPixelFarCommand() {
         super(
                 new PivotCommand(IntakeSubsystem.Mode.SCORING),
-                new ArmCommand(220),
-                new WaitCommand(300),
-                new ExtensionCommand(-1200),
+                new ArmCommand(260),
+                new WaitCommand(500),
+                new ExtensionCommand(-1300),
                 new WaitCommand(800),
                 new ClawCommand(IntakeSubsystem.Mode.SHARP, IntakeSubsystem.Mode.LEFT),
                 new WaitCommand(300)

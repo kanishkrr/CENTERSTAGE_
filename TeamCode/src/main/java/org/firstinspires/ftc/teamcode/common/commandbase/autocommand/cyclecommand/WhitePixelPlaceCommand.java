@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.common.commandbase.autocommand.cyclecommand;
 
+import com.arcrobotics.ftclib.command.InstantCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 
@@ -9,17 +10,17 @@ import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.Extens
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.PivotCommand;
 import org.firstinspires.ftc.teamcode.common.subsystems.IntakeSubsystem;
 
-public class WhiteFrontExtendCommand extends SequentialCommandGroup {
+public class WhitePixelPlaceCommand extends SequentialCommandGroup {
 
-    public WhiteFrontExtendCommand() {
+    public WhitePixelPlaceCommand() {
         super(
-                new PivotCommand(IntakeSubsystem.Mode.LINED),
-                new ArmCommand(285),
-                new WaitCommand(300), //used to be 800 (change back incase doesn't pickup pixel)
-                new ArmCommand(170), //used to have a wait command for 400 after this
-                new ExtensionCommand(-1030),
-                new ClawCommand(IntakeSubsystem.Mode.WIDE, IntakeSubsystem.Mode.RIGHT),
-                new WaitCommand(800)
+          new ArmCommand(320),
+          new PivotCommand(IntakeSubsystem.Mode.SCORING),
+          new WaitCommand(400),
+          new ExtensionCommand(-1550),
+          new WaitCommand(700),
+          new ClawCommand(IntakeSubsystem.Mode.WIDE, IntakeSubsystem.Mode.RIGHT),
+          new WaitCommand(400)
         );
     }
 }

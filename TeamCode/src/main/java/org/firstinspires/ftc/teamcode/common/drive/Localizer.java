@@ -19,7 +19,7 @@ public class Localizer extends ThreeTrackingWheelLocalizer {
     public static double WHEEL_RADIUS = 0.944882;
     public static double GEAR_RATIO = 1;
 
-    public static double LATERAL_DISTANCE = 9.18;
+    public static double LATERAL_DISTANCE = 9.22; //used to be 9.18
     public static double FORWARD_OFFSET = 0.94;
 
     public static double X_MULTIPLIER = 0.98823;

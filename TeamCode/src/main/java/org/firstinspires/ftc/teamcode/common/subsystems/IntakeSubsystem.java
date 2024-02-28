@@ -48,7 +48,7 @@ public class IntakeSubsystem extends SubsystemBase {
     }
 
     public void alignWithGround() {
-        angleServo.setPosition(0.175);
+        angleServo.setPosition(0.177);
     }
 
     public void alignWithGroundAuto() {

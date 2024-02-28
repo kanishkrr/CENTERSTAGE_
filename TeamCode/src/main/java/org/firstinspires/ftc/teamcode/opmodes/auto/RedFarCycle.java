@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.command.CommandScheduler;
+import com.arcrobotics.ftclib.command.ConditionalCommand;
 import com.arcrobotics.ftclib.command.SequentialCommandGroup;
 import com.arcrobotics.ftclib.command.WaitCommand;
 import com.qualcomm.hardware.lynx.LynxModule;
@@ -18,7 +19,9 @@ import org.firstinspires.ftc.teamcode.common.commandbase.drivecommand.PathComman
 import org.firstinspires.ftc.teamcode.common.commandbase.drivecommand.PositionCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.ArmCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.ClawCommand;
+import org.firstinspires.ftc.teamcode.common.drive.Constants;
 import org.firstinspires.ftc.teamcode.common.drive.geometry.Pose;
+import org.firstinspires.ftc.teamcode.common.hardware.Globals;
 import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
 import org.firstinspires.ftc.teamcode.common.centerstage.Location;
 import org.firstinspires.ftc.teamcode.common.subsystems.IntakeSubsystem;
@@ -59,6 +62,17 @@ public class RedFarCycle extends LinearOpMode {
         for (LynxModule hub : allHubs) {
             hub.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
         }
+
+        Globals.IS_AUTO = true;
+        Globals.ALLIANCE = Location.RED;
+        Globals.SIDE = Location.FAR;
+
+        /*
+        ramp up max speed when relocalize command works + perfect lateral distance is calculated
+         */
+
+        Constants.MAX_LINEAR_SPEED = 0.5;
+        Constants.MAX_ROTATIONAL_SPEED = 0.4;
 
         robot.init(hardwareMap);
 
@@ -112,9 +126,18 @@ public class RedFarCycle extends LinearOpMode {
                         new PurpleDropRetractCommand(),
 
                         new PositionCommand(new Pose(-5, 25.5, Math.toRadians(90))),
+
                         new WhiteFrontExtendCommand(),
+
                         new WhiteFrontRetractCommand(),
-                        new PathCommand(new Pose(-4, 3, Math.toRadians(90)), new Pose(45, 1, Math.toRadians(90)))
+
+                        new ConditionalCommand(
+                                new PathCommand(new Pose(-4, 3, Math.toRadians(90)), new Pose(45, 1, Math.toRadians(90))),
+                                new PathCommand(new Pose(0, 48, Math.toRadians(90)), new Pose(60, 48, Math.toRadians(90))),
+                                () -> {
+                                    return Globals.PATH == Location.SIDE;
+                                }
+                        )
                 )
         );
 
