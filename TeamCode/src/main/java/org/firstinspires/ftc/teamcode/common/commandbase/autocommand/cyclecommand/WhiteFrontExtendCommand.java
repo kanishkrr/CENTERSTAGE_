@@ -16,7 +16,7 @@ public class WhiteFrontExtendCommand extends SequentialCommandGroup {
                 new PivotCommand(IntakeSubsystem.Mode.LINED),
                 new ArmCommand(285),
                 new WaitCommand(300), //used to be 800 (change back incase doesn't pickup pixel)
-                new ArmCommand(170), //used to have a wait command for 400 after this
+                new ArmCommand(160), //used to have a wait command for 400 after this
                 new ExtensionCommand(-1030),
                 new ClawCommand(IntakeSubsystem.Mode.WIDE, IntakeSubsystem.Mode.RIGHT),
                 new WaitCommand(800)

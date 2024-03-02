@@ -17,8 +17,8 @@ import org.firstinspires.ftc.teamcode.common.hardware.Globals;
 import org.firstinspires.ftc.teamcode.common.hardware.RobotHardware;
 import org.firstinspires.ftc.teamcode.common.subsystems.IntakeSubsystem;
 
-@TeleOp(name = "Duo")
-public class MainTeleOp extends CommandOpMode {
+@TeleOp(name = "Localization")
+public class LocalizationTeleOp extends CommandOpMode {
     private final RobotHardware robot = RobotHardware.getInstance();
     private GamepadEx gamepadEx;
     private GamepadEx gamepadEx2;
@@ -68,11 +68,10 @@ public class MainTeleOp extends CommandOpMode {
 
         robot.drivetrain.set(new Pose(gamepad1.left_stick_x*(gamepad1.right_trigger*0.75 + 0.25), -gamepad1.left_stick_y*(gamepad1.right_trigger*0.75 + 0.25), gamepad1.right_stick_x*(gamepad1.right_trigger*0.5 + 0.4)), 0);
 
-        robot.hang.setPower(0);
-        if (gamepad2.dpad_down) robot.hang.setPower(-0.8);
-        else if (gamepad2.dpad_up) robot.hang.setPower(0.8);
+        telemetry.addData("robot x:", robot.drivetrain.localizer.getPose().x);
+        telemetry.addData("robot y:", robot.drivetrain.localizer.getPose().y);
+        telemetry.addData("robot heading:", robot.drivetrain.localizer.getPose().heading);
+        telemetry.update();
 
-        robot.extension.setArmTargetPosition(robot.extension.armTarget - gamepad2.left_stick_y*15);
-        robot.extension.setSlideTargetPosition(robot.extension.slideTarget + gamepad2.right_stick_y*30);
     }
 }

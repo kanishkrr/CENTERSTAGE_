@@ -14,7 +14,7 @@ public class YellowPixelExtendCommand extends SequentialCommandGroup {
     public YellowPixelExtendCommand() {
         super(
                 new WaitCommand(700),
-                new ArmCommand(230),
+                new ArmCommand(220),
                 new WaitCommand(900),
                 new PivotCommand(IntakeSubsystem.Mode.SCORING),
                 new ExtensionCommand(-1200),
