@@ -14,12 +14,12 @@ public class YellowPixelFarCommand extends SequentialCommandGroup {
     public YellowPixelFarCommand() {
         super(
                 new PivotCommand(IntakeSubsystem.Mode.SCORING),
-                new ArmCommand(260),
+                new ArmCommand(273),
                 new WaitCommand(500),
                 new ExtensionCommand(-1300),
                 new WaitCommand(800),
                 new ClawCommand(IntakeSubsystem.Mode.SHARP, IntakeSubsystem.Mode.LEFT),
-                new WaitCommand(300)
+                new WaitCommand(500)
         );
     }
 }

@@ -20,8 +20,6 @@ import org.firstinspires.ftc.teamcode.common.subsystems.IntakeSubsystem;
 @TeleOp(name = "Localization")
 public class LocalizationTeleOp extends CommandOpMode {
     private final RobotHardware robot = RobotHardware.getInstance();
-    private GamepadEx gamepadEx;
-    private GamepadEx gamepadEx2;
 
     @Override
     public void initialize() {
@@ -29,36 +27,10 @@ public class LocalizationTeleOp extends CommandOpMode {
 
         Globals.IS_AUTO = false;
 
-        gamepadEx = new GamepadEx(gamepad1);
-        gamepadEx2 = new GamepadEx(gamepad2);
-
         robot.init(hardwareMap);
 
         robot.extension.setArmTargetPosition(180);
         robot.extension.setSlideTargetPosition(0);
-
-        robot.drone.init();
-
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.X)
-                .whenPressed(new PickupPixelCommand());
-
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.Y)
-                .whenPressed(new PixelRetractCommand());
-
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.A)
-                .whenPressed(new ScoreCommand());
-
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.B)
-                .whenPressed(new SlideRetractCommand());
-
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
-                .whenPressed(new ClawCommand(IntakeSubsystem.Mode.SHARP, IntakeSubsystem.Mode.RIGHT));
-
-        gamepadEx2.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
-                .whenPressed(new ClawCommand(IntakeSubsystem.Mode.SHARP, IntakeSubsystem.Mode.LEFT));
-
-        gamepadEx.getGamepadButton(GamepadKeys.Button.BACK)
-                .whenPressed(new DroneCommand());
     }
 
     @Override

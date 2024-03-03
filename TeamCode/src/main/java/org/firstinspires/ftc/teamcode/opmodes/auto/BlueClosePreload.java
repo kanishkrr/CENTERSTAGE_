@@ -17,6 +17,7 @@ import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.closesideco
 import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.closesidecommand.YellowPixelExtendCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.closesidecommand.YellowPixelRetractCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.generalcommand.InitCommand;
+import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.generalcommand.StartCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.drivecommand.PositionCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.ArmCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.ClawCommand;
@@ -206,7 +207,7 @@ public class BlueClosePreload extends LinearOpMode {
         CommandScheduler.getInstance().schedule(
                 new SequentialCommandGroup(
 
-                        new ArmCommand(220),
+                        new StartCommand(),
 
                         new PositionCommand(yellowPose)
                                 .alongWith(new YellowPixelExtendCommand()),

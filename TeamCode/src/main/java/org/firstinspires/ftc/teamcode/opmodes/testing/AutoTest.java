@@ -73,23 +73,17 @@ public class AutoTest extends LinearOpMode {
 
         CommandScheduler.getInstance().schedule(
             new SequentialCommandGroup(
+
                     new PositionCommand(new Pose(25.7, 21.5, Math.toRadians(-90)))
                             .alongWith(new YellowPixelExtendCommand()),
+
                     new WaitCommand(50),
                     new YellowPixelRetractCommand(),
                     new WaitCommand(50),
                     new PositionCommand(new Pose(27.6, 25, Math.toRadians(-90))) //20
                             .alongWith(new PurplePixelExtendCommand()),
                     new ClawCommand(IntakeSubsystem.Mode.WIDE, IntakeSubsystem.Mode.LEFT),
-                    new WaitCommand(800),
-                    new ClawCommand(IntakeSubsystem.Mode.CLOSE, IntakeSubsystem.Mode.BOTH),
-                    new PositionCommand(new Pose(7,2.5,Math.toRadians(-90))),
-                    new PositionCommand(new Pose(-55,0.5,Math.toRadians(-90))),
-                    new PositionCommand(new Pose(-57,20,Math.toRadians(-90))),
-                    new WhiteBackExtendCommand(),
-                    new WhiteBackRetractCommand(),
-                    new PositionCommand(new Pose(-55,-1,Math.toRadians(-90))),
-                    new PositionCommand(new Pose(-55,-1,Math.toRadians(-90)))
+                    new WaitCommand(800)
             )
         );
 

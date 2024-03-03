@@ -4,4 +4,6 @@ public class Constants {
 
     public static double MAX_LINEAR_SPEED = 0.5;
     public static double MAX_ROTATIONAL_SPEED = 0.4;
+
+    public static double DEAD_MS = 2500;
 }

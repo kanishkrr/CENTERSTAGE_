@@ -13,7 +13,7 @@ public class RedParkCommand extends SequentialCommandGroup {
                 new PositionCommand(new Pose(24, 7, Math.toRadians(90)))
                         .alongWith(new PurpleDropRetractCommand()),
 
-                new PositionCommand(new Pose(36, 3, Math.toRadians(85)))
+                new PositionCommand(new Pose(44, 3, Math.toRadians(85)))
         );
     }
 }

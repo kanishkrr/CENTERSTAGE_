@@ -3,17 +3,16 @@ package org.firstinspires.ftc.teamcode.common.subsystems;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
-import com.qualcomm.robotcore.util.Range;
 
 public class IntakeSubsystem extends SubsystemBase {
     Servo angleServo, rightServo, leftServo;
     public enum Mode {
-        FLAT, SCORING, REST, LEFT, RIGHT, BOTH, WIDE, SHARP, CLOSE, STRAIGHT, LINED;
+        FLAT, SCORING, REST, LEFT, RIGHT, BOTH, WIDE, SHARP, CLOSE, STRAIGHT, LINED, INIT;
     }
 
     //modes for angle should be --> HOLD (after pickup), FLAT (during pickup), SCORING (to align with board), and STRAIGHT (to drop purple pixel)
 
-    Mode current = Mode.REST;
+    Mode current = Mode.INIT;
     Mode side = Mode.BOTH;
     Mode clawState = Mode.CLOSE;
 
@@ -40,33 +39,37 @@ public class IntakeSubsystem extends SubsystemBase {
     public void alignWithBoard(double armPos) {
         double newAsPos = 0.3;
 
-        if (armPos > 170 && armPos < 530) {
+        if (armPos > 140 && armPos < 530) {
             newAsPos = (-0.0006*(armPos) + 0.49) + 0.02;
         }
 
-        angleServo.setPosition(newAsPos);
+        angleServo.setPosition(newAsPos+0.43);
     }
 
     public void alignWithGround() {
-        angleServo.setPosition(0.177);
+        angleServo.setPosition(0.177+0.43);
     }
 
     public void alignWithGroundAuto() {
-        angleServo.setPosition(0.17);
+        angleServo.setPosition(0.17+0.43);
     }
 
-    public void alignWithGroundLined() {angleServo.setPosition(0.2);}
+    public void alignWithGroundLined() {angleServo.setPosition(0.2+0.43);}
+
+    public void init() {
+        angleServo.setPosition(0.1);
+    }
 
     public void closeRight() {
-        rightServo.setPosition(0.42);
+        rightServo.setPosition(0.36);
     }
 
     public void closeLeft() {
-        leftServo.setPosition(0.58);
+        leftServo.setPosition(0.64);
     }
 
     public void resetPosition() {
-        angleServo.setPosition(0.54);
+        angleServo.setPosition(0.54+0.43);
     }
 
     public void closeBoth() {
@@ -102,6 +105,8 @@ public class IntakeSubsystem extends SubsystemBase {
             alignWithGroundAuto();
         } else if (current == Mode.LINED) {
             alignWithGroundLined();
+        } else if (current == Mode.INIT) {
+            init();
         } else {
             resetPosition();
         }

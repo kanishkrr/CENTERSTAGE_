@@ -17,6 +17,7 @@ import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.closesideco
 import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.closesidecommand.YellowPixelExtendCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.closesidecommand.YellowPixelRetractCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.generalcommand.InitCommand;
+import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.generalcommand.StartCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.drivecommand.PositionCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.ArmCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.ClawCommand;
@@ -97,6 +98,7 @@ public class RedClosePreload extends LinearOpMode {
 
         Constants.MAX_LINEAR_SPEED = 0.7;
         Constants.MAX_ROTATIONAL_SPEED = 0.5;
+        Constants.DEAD_MS = 1500;
 
         robot.init(hardwareMap);
 
@@ -186,16 +188,16 @@ public class RedClosePreload extends LinearOpMode {
 
         switch(location) {
             case Left:
-                purplePose = new Pose(6, 25, Math.toRadians(-86));
-                yellowPose = new Pose(24.8, 34, Math.toRadians(-86));
+                purplePose = new Pose(5, 25, Math.toRadians(-86));
+                yellowPose = new Pose(24.8, 34, Math.toRadians(-90));
                 break;
             case Middle:
-                purplePose = new Pose(22.4, 37.5, Math.toRadians(-86));
-                yellowPose = new Pose(24.8, 28, Math.toRadians(-86));
+                purplePose = new Pose(21.8, 38, Math.toRadians(-86));
+                yellowPose = new Pose(24.8, 28.5, Math.toRadians(-90));
                 break;
             case Right:
-                purplePose = new Pose(27, 20, Math.toRadians(-86)); //new Pose(13, 33, Math.toRadians(-86));
-                yellowPose = new Pose(25.3, 20.9, Math.toRadians(-86)); //new Pose(24.8, 33.6, Math.toRadians(-86));
+                purplePose = new Pose(27, 21.3, Math.toRadians(-86)); //new Pose(13, 33, Math.toRadians(-86));
+                yellowPose = new Pose(24.5, 21.85, Math.toRadians(-90)); //new Pose(24.8, 33.6, Math.toRadians(-86));
                 break;
         }
 
@@ -205,17 +207,19 @@ public class RedClosePreload extends LinearOpMode {
         CommandScheduler.getInstance().schedule(
                 new SequentialCommandGroup(
 
-                        new ArmCommand(220),
+                        new StartCommand(),
 
                         new PositionCommand(yellowPose)
                                 .alongWith(new YellowPixelExtendCommand()),
 
-                        new WaitCommand(500),
+                        new WaitCommand(50),
 
                         new YellowPixelRetractCommand(),
 
-                        new PurplePixelExtendCommand()
-                                .alongWith(new WaitCommand(500).andThen(new PositionCommand(purplePose))),
+                        new WaitCommand(50),
+
+                        new PositionCommand(purplePose)
+                                .alongWith(new PurplePixelExtendCommand()),
 
                         new ConditionalCommand(
                                 new PositionCommand(new Pose(purplePose.x, purplePose.y+8, purplePose.heading)),
@@ -225,7 +229,7 @@ public class RedClosePreload extends LinearOpMode {
                                 }
                         ),
 
-                        new ClawCommand(IntakeSubsystem.Mode.LEFT, IntakeSubsystem.Mode.SHARP),
+                        new ClawCommand(IntakeSubsystem.Mode.WIDE, IntakeSubsystem.Mode.LEFT),
 
                         new WaitCommand(500),
 
@@ -246,3 +250,17 @@ public class RedClosePreload extends LinearOpMode {
 
     }
 }
+
+
+/*
+new PositionCommand(new Pose(25.7, 21.5, Math.toRadians(-90)))
+                            .alongWith(new YellowPixelExtendCommand()),
+
+                    new WaitCommand(50),
+                    new YellowPixelRetractCommand(),
+                    new WaitCommand(50),
+                    new PositionCommand(new Pose(27.6, 25, Math.toRadians(-90))) //20
+                            .alongWith(new PurplePixelExtendCommand()),
+                    new ClawCommand(IntakeSubsystem.Mode.WIDE, IntakeSubsystem.Mode.LEFT),
+                    new WaitCommand(800)
+ */

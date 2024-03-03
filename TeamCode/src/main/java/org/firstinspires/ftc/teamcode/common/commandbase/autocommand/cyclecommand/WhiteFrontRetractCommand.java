@@ -22,7 +22,7 @@ public class WhiteFrontRetractCommand extends SequentialCommandGroup {
                         new ClawCommand(IntakeSubsystem.Mode.CLOSE, IntakeSubsystem.Mode.BOTH),
                         new ClawCommand(IntakeSubsystem.Mode.SHARP, IntakeSubsystem.Mode.RIGHT),
                         () -> {
-                            return RobotHardware.getInstance().extension.armCurrent > 130;
+                            return RobotHardware.getInstance().extension.armCurrent > 135;
                         }
                 ),
                 new WaitCommand(500),

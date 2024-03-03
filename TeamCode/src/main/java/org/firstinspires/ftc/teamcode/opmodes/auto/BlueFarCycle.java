@@ -21,7 +21,6 @@ import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.closesideco
 import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.farsidecommand.YellowPixelFarCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.generalcommand.InitCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.generalcommand.StartCommand;
-import org.firstinspires.ftc.teamcode.common.commandbase.drivecommand.PathCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.drivecommand.PositionCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.ClawCommand;
 import org.firstinspires.ftc.teamcode.common.drive.Constants;
@@ -39,7 +38,7 @@ import org.openftc.easyopencv.OpenCvWebcam;
 import java.util.List;
 
 @Config
-@Autonomous(name = "blue far")
+@Autonomous(name = "blue far cycle")
 public class BlueFarCycle extends LinearOpMode {
 
     OpModeVisionBlueFar pipeline;
@@ -210,8 +209,6 @@ public class BlueFarCycle extends LinearOpMode {
                 new SequentialCommandGroup(
 
                         new StartCommand(),
-
-                        new WaitCommand(500),
 
                         new PositionCommand(purplePose)
                                 .alongWith(new PurplePixelDropCommand()),

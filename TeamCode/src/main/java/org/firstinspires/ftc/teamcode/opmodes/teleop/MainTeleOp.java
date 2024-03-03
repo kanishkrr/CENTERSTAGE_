@@ -37,6 +37,9 @@ public class MainTeleOp extends CommandOpMode {
         robot.extension.setArmTargetPosition(180);
         robot.extension.setSlideTargetPosition(0);
 
+        robot.claw.changeAngleState(IntakeSubsystem.Mode.REST);
+        robot.claw.update(0);
+
         robot.drone.init();
 
         gamepadEx2.getGamepadButton(GamepadKeys.Button.X)

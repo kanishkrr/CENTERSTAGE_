@@ -14,9 +14,9 @@ public class PurplePixelExtendCommand extends SequentialCommandGroup {
                 new ArmCommand(1000),
                 new PivotCommand(IntakeSubsystem.Mode.LINED),
                 new WaitCommand(1000),
-                new ArmCommand(1270),
+                new ArmCommand(1300),
                 new WaitCommand(600),
-                new ArmCommand(1410),
+                new ArmCommand(1425),
                 new WaitCommand(500)
         );
     }
