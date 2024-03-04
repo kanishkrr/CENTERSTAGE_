@@ -189,15 +189,15 @@ public class BlueClosePreload extends LinearOpMode {
         switch(location) {
             case Left:
                 purplePose = new Pose(-27, 46.2, Math.toRadians(86));
-                yellowPose = new Pose(-25.3, 22.5, Math.toRadians(86));
+                yellowPose = new Pose(-25.8, 22.5, Math.toRadians(86));
                 break;
             case Middle:
                 purplePose = new Pose(-21, 45.5, Math.toRadians(86));
-                yellowPose = new Pose(-24.8, 28, Math.toRadians(86));
+                yellowPose = new Pose(-25.2, 28, Math.toRadians(86));
                 break;
             case Right:
                 purplePose = new Pose(-13, 33, Math.toRadians(86));
-                yellowPose = new Pose(-24.8, 33.6, Math.toRadians(86));
+                yellowPose = new Pose(-25.2, 33.6, Math.toRadians(86));
                 break;
         }
 
@@ -212,9 +212,11 @@ public class BlueClosePreload extends LinearOpMode {
                         new PositionCommand(yellowPose)
                                 .alongWith(new YellowPixelExtendCommand()),
 
-                        new WaitCommand(500),
+                        new WaitCommand(50),
 
                         new YellowPixelRetractCommand(),
+
+                        new WaitCommand(50),
 
                         new PositionCommand(purplePose)
                                 .alongWith(new PurplePixelExtendCommand()),
@@ -227,9 +229,9 @@ public class BlueClosePreload extends LinearOpMode {
                                 }
                         ),
 
-                        new ClawCommand(IntakeSubsystem.Mode.LEFT, IntakeSubsystem.Mode.SHARP),
+                        new ClawCommand(IntakeSubsystem.Mode.SHARP, IntakeSubsystem.Mode.LEFT),
 
-                        new WaitCommand(500),
+                        new WaitCommand(700),
 
                         new BlueParkCommand()
                 )

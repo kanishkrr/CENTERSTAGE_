@@ -55,10 +55,10 @@ public class MainTeleOp extends CommandOpMode {
                 .whenPressed(new SlideRetractCommand());
 
         gamepadEx2.getGamepadButton(GamepadKeys.Button.RIGHT_BUMPER)
-                .whenPressed(new ClawCommand(IntakeSubsystem.Mode.SHARP, IntakeSubsystem.Mode.RIGHT));
+                .whenPressed(new ClawCommand(IntakeSubsystem.Mode.WIDE, IntakeSubsystem.Mode.RIGHT));
 
         gamepadEx2.getGamepadButton(GamepadKeys.Button.LEFT_BUMPER)
-                .whenPressed(new ClawCommand(IntakeSubsystem.Mode.SHARP, IntakeSubsystem.Mode.LEFT));
+                .whenPressed(new ClawCommand(IntakeSubsystem.Mode.WIDE, IntakeSubsystem.Mode.LEFT));
 
         gamepadEx.getGamepadButton(GamepadKeys.Button.BACK)
                 .whenPressed(new DroneCommand());

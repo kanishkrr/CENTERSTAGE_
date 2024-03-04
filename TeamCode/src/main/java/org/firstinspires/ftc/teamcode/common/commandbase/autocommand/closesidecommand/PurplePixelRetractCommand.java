@@ -15,9 +15,9 @@ public class PurplePixelRetractCommand extends SequentialCommandGroup {
                 new WaitCommand(200),
                 new ArmCommand(200),
                 new WaitCommand(500),
-                new PivotCommand(IntakeSubsystem.Mode.REST),
                 new WaitCommand(1000),
-                new ClawCommand(IntakeSubsystem.Mode.CLOSE, IntakeSubsystem.Mode.BOTH),
+                new ClawCommand(IntakeSubsystem.Mode.CLOSE, IntakeSubsystem.Mode.RIGHT),
+                new PivotCommand(IntakeSubsystem.Mode.REST),
                 new WaitCommand(1000)
 
         );

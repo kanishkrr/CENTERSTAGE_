@@ -47,7 +47,7 @@ public class ExtensionController extends SubsystemBase {
         double pid = armController.calculate(ARM_CURRENT, ARM_TARGET);
 
         /*
-            kG = power needed to sustain at 0 angle, max extension --> need to find first
+            kG = power needed to sustain at 0 angle, max extension --> need to find this first
             theta = arm angle
             distcog = dist of center of mass from center of rotation
             distcogmax = dist of center of mass from center of rotation at max extension

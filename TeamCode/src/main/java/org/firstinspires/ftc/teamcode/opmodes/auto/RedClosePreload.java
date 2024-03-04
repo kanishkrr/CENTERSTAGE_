@@ -98,7 +98,6 @@ public class RedClosePreload extends LinearOpMode {
 
         Constants.MAX_LINEAR_SPEED = 0.7;
         Constants.MAX_ROTATIONAL_SPEED = 0.5;
-        Constants.DEAD_MS = 1500;
 
         robot.init(hardwareMap);
 
@@ -196,8 +195,8 @@ public class RedClosePreload extends LinearOpMode {
                 yellowPose = new Pose(24.8, 28.5, Math.toRadians(-90));
                 break;
             case Right:
-                purplePose = new Pose(27, 21.3, Math.toRadians(-86)); //new Pose(13, 33, Math.toRadians(-86));
-                yellowPose = new Pose(24.5, 21.85, Math.toRadians(-90)); //new Pose(24.8, 33.6, Math.toRadians(-86));
+                purplePose = new Pose(27, 21.3, Math.toRadians(-86));
+                yellowPose = new Pose(24.5, 22.85, Math.toRadians(-90));
                 break;
         }
 

@@ -13,9 +13,11 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.checkerframework.checker.lock.qual.LockPossiblyHeld;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.closesidecommand.PurplePixelRetractCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.closesidecommand.YellowPixelRetractCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.cyclecommand.WhiteFrontExtendCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.cyclecommand.WhiteFrontRetractCommand;
+import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.cyclecommand.WhitePixelPlaceCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.farsidecommand.PurpleDropRetractCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.farsidecommand.PurplePixelDropCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.autocommand.farsidecommand.YellowPixelFarCommand;
@@ -25,6 +27,7 @@ import org.firstinspires.ftc.teamcode.common.commandbase.drivecommand.PathComman
 import org.firstinspires.ftc.teamcode.common.commandbase.drivecommand.PositionCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.ArmCommand;
 import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.ClawCommand;
+import org.firstinspires.ftc.teamcode.common.commandbase.subsystemcommand.ExtensionCommand;
 import org.firstinspires.ftc.teamcode.common.drive.Constants;
 import org.firstinspires.ftc.teamcode.common.drive.geometry.Pose;
 import org.firstinspires.ftc.teamcode.common.hardware.Globals;
@@ -186,11 +189,11 @@ public class RedFarCycle extends LinearOpMode {
 
         switch(location) {
             case Left:
-                purplePose = new Pose(-3.5, 8.5, Math.toRadians(11.8));
+                purplePose = new Pose(-3.5, 8.5, Math.toRadians(12.7));
                 yellowPose = new Pose(77, 24.5, Math.toRadians(-90));
                 break;
             case Middle:
-                purplePose = new Pose(-1.5, 8.6, Math.toRadians(-15));
+                purplePose = new Pose(-1.5, 8.6, Math.toRadians(-13));
                 yellowPose = new Pose(76, 18, Math.toRadians(-90));
                 break;
             case Right:
@@ -275,8 +278,15 @@ public class RedFarCycle extends LinearOpMode {
 
                         new WaitCommand(50),
 
-                        new YellowPixelRetractCommand()
+                        new YellowPixelRetractCommand(),
 
+                        new WhitePixelPlaceCommand(),
+
+                        new ExtensionCommand(0),
+
+                        new PurplePixelRetractCommand(),
+
+                        new WaitCommand(400)
                 )
         );
 
